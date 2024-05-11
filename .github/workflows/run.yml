@@ -31,7 +31,7 @@ jobs:
     concurrency: production
     steps:
       - name: Deploy to server
-        uses: easingthemes/ssh-deploy@v2.1.6
+        uses: easingthemes/ssh-deploy@main
         env:
           LOCAL_DIR: dist/*
           REMOTE_DIR: /root/pitrix/ray
@@ -41,3 +41,5 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           SOURCE: "dist/"
           TARGE: /root/pitrix/ray
+          EXCLUDE: "/dist/, /node_modules/"
+          ARGS: "-rlgoDzvc -i --delete"
