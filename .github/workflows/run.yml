@@ -32,14 +32,11 @@ jobs:
     steps:
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@main
-        env:
-          LOCAL_DIR: dist/*
-          REMOTE_DIR: /root/pitrix/ray
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_HOST: 8.137.39.4
+          REMOTE_USER: root
           SOURCE: "dist/"
-          TARGE: /root/pitrix/ray
+          TARGE: "/root/pitrix/ray"
           EXCLUDE: "/dist/, /node_modules/"
           ARGS: "-rlgoDzvc -i --delete"
