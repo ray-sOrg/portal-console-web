@@ -32,6 +32,9 @@ jobs:
     steps:
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@v2.1.6
+        env:
+          LOCAL_DIR: dist
+          REMOTE_DIR: /root/pitrix/ray
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
@@ -39,5 +42,5 @@ jobs:
           server: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          local: "dist" # 修改为你的构建目录
-          remote: "/root/pitrix/ray" # 修改为你的部署目录
+          local: ${{ env.LOCAL_DIR }}
+          remote: ${{ env.REMOTE_DIR }}
