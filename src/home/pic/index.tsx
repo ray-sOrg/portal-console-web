@@ -1,4 +1,5 @@
-import Item from "./item";
+import { Suspense, lazy } from "react";
+const LazyImageItem = lazy(() => import("./item"));
 
 const data = [
   "/images/WechatIMG3847.webp",
@@ -11,9 +12,11 @@ function PicWrap() {
     <div
       style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
     >
-      {data.map(i => (
-        <Item key={i} src={i} />
-      ))}
+      <Suspense fallback={<div>Loading...</div>}>
+        {data.map(i => (
+          <LazyImageItem key={i} src={i} />
+        ))}
+      </Suspense>
     </div>
   );
 }
