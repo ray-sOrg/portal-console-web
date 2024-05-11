@@ -33,7 +33,7 @@ jobs:
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@v2.1.6
         env:
-          LOCAL_DIR: './dist/*'
+          LOCAL_DIR: dist/*
           REMOTE_DIR: /root/pitrix/ray
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
