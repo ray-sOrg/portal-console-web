@@ -58,4 +58,4 @@ jobs:
           SOURCE: "dist/"
           REMOTE_HOST: ${{ env.SERVER_HOST }}
           REMOTE_USER: ${{ env.USER_NAME }}
-          TARGET: /home/note # 服务器目标路径
+          TARGET: /root/pitrix/ray # 服务器目标路径
