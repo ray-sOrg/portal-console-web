@@ -1,9 +1,11 @@
+import Home from "./home";
+
 function App() {
   return (
     <>
-     app
+      <Home />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
