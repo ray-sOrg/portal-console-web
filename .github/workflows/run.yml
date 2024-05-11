@@ -30,6 +30,8 @@ jobs:
     environment: production
     concurrency: production
     steps:
+      - name: Set permissions for SSH key
+        run: chmod 600 ${{ runner.workspace }}/.ssh/deploy_key
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@v2.1.6
         with:
