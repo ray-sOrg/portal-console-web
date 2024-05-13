@@ -5,7 +5,13 @@
 .title {
     text-align: center;
     font-family: 'apalu', sans-serif;
-    font-size: 64px;
+    .link {
+        font-size: 64px;
+        transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+        &:hover {
+            opacity: 0.75;
+        }
+    }
 }
 .images {
     text-align: right;

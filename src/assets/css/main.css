@@ -5,6 +5,11 @@ a {
   color: inherit; /* 使用父元素的文本颜色 */
 }
 
+:root {
+  background-color: #373834;
+  color: #fffefb;
+}
+
 
 @font-face {
   font-family: 'apalu';

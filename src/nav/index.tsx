@@ -7,7 +7,9 @@ function Nav() {
       <div className={styles.wrap}>
         <div />
         <div className={styles.title}>
-          <Link to="/">Ray</Link>
+          <Link to="/" className={styles.link}>
+            Ray
+          </Link>
         </div>
         <div className={styles.images}>
           <Link to="/images">Images</Link>
