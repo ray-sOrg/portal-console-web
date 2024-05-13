@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "./index.module.css";
 
 function Nav() {
+  console.log("test");
   return (
     <nav>
       <div className={styles.wrap}>
