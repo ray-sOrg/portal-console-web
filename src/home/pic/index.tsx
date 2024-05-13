@@ -3,8 +3,11 @@ const LazyImageItem = lazy(() => import("./item"));
 
 const data = [
   "/images/WechatIMG3847.webp",
+  "/images/WechatIMG3847-compressed.webp",
   "/images/WechatIMG3454.webp",
-  "/images/WechatIMG3453.webp"
+  "/images/WechatIMG3454-compressed.webp",
+  "/images/WechatIMG3453.webp",
+  "/images/WechatIMG3453-compressed.webp"
 ];
 
 function PicWrap() {
