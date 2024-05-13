@@ -67,11 +67,11 @@ button:focus-visible {
 
 @font-face {
   font-family: 'apalu';
-  src: url('/font/apalu-3.ttf') format('truetype');
+  src: url('./assets/font/apalu/apalu-3.ttf') format('truetype');
 }
 
 
 @font-face {
-  font-family: 'brush';
-  src: url('/font/kust.woff') format('truetype');
+  font-family: 'kust';
+  src: url('./assets/font/brush/kust.woff') format('truetype');
 }
