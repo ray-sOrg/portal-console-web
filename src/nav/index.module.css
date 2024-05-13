@@ -5,4 +5,8 @@
 .title {
     text-align: center;
     font-family: 'apalu', sans-serif;
+    font-size: 64px;
+}
+.images {
+    text-align: right;
 }

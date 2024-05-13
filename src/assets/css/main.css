@@ -1,0 +1,18 @@
+@import url('./normalize.css');
+
+a {
+  text-decoration: none; /* 去除下划线 */
+  color: inherit; /* 使用父元素的文本颜色 */
+}
+
+
+@font-face {
+  font-family: 'apalu';
+  src: url('../font/apalu/apalu-3.ttf') format('truetype');
+}
+  
+  
+@font-face {
+  font-family: 'kust';
+  src: url('../font/brush/kust.woff') format('truetype');
+}
