@@ -8,14 +8,6 @@ export default [
     path: "/",
     element: <Home />,
     errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "images",
-        async lazy() {
-          let { Images } = await import("./images");
-          return { Component: Images };
-        }
-      }
-    ]
+    children: []
   }
 ] as RouteObject[];
