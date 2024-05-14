@@ -11,6 +11,7 @@
     "sync-images": "cd /Users/wujiale/Desktop/project/sh ./sync_images.sh"
   },
   "dependencies": {
+    "antd": "^5.17.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1"
