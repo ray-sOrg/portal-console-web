@@ -1,6 +1,7 @@
 import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
 import HeaderComponent from "component/header";
+import FooterComponent from "component/footer";
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -16,7 +17,9 @@ function Home() {
           <Outlet />
         </Content>
       </Layout>
-      <Footer>Footer</Footer>
+      <Footer>
+        <FooterComponent />
+      </Footer>
     </Layout>
   );
 }
