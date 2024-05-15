@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import { resolve } from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,5 +10,12 @@ export default defineConfig({
   },
   build: {
     cssMinify: "lightningcss"
+  },
+  resolve: {
+    alias: {
+      "@": "/src/",
+      component: "/src/component/",
+      assets: "/src/assets/"
+    }
   }
 });

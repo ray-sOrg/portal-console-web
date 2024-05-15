@@ -1,12 +1,15 @@
 import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
+import HeaderComponent from "component/header";
 
 const { Header, Sider, Content, Footer } = Layout;
 
 function Home() {
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Header>Header</Header>
+      <Header>
+        <HeaderComponent />
+      </Header>
       <Layout>
         <Sider width="25%">Sider</Sider>
         <Content>
