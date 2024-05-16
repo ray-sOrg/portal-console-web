@@ -16,8 +16,16 @@ function Home() {
         <Sider width={200}>
           <SiderComponent />
         </Sider>
-        <Content>
-          <Outlet />
+        <Content style={{ padding: "12px" }}>
+          <div
+            style={{
+              height: "100%",
+              backgroundColor: "#fff",
+              borderRadius: "4px"
+            }}
+          >
+            <Outlet />
+          </div>
         </Content>
       </Layout>
       <Footer>

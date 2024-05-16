@@ -13,7 +13,8 @@ export default {
       algorithm: true
     },
     Layout: {
-      headerBg: "rgb(85, 124, 131)"
+      headerBg: "rgb(85, 124, 131)",
+      footerBg: "rgb(85, 124, 131)"
     }
   }
 };
