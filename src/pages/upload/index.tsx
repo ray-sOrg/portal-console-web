@@ -3,45 +3,6 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Image, Upload } from "antd";
 import type { GetProp, UploadFile, UploadProps } from "antd";
 
-const mock = [
-  {
-    uid: "-1",
-    name: "image.png",
-    status: "done",
-    url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-  },
-  {
-    uid: "-2",
-    name: "image.png",
-    status: "done",
-    url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-  },
-  {
-    uid: "-3",
-    name: "image.png",
-    status: "done",
-    url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-  },
-  {
-    uid: "-4",
-    name: "image.png",
-    status: "done",
-    url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-  },
-  {
-    uid: "-xxx",
-    percent: 50,
-    name: "image.png",
-    status: "uploading",
-    url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-  },
-  {
-    uid: "-5",
-    name: "image.png",
-    status: "error"
-  }
-] as UploadFile[];
-
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
 const getBase64 = (file: FileType): Promise<string> =>
@@ -52,10 +13,17 @@ const getBase64 = (file: FileType): Promise<string> =>
     reader.onerror = error => reject(error);
   });
 
+const uploadButton = (
+  <button style={{ border: 0, background: "none" }} type="button">
+    <PlusOutlined />
+    <div style={{ marginTop: 8 }}>Upload</div>
+  </button>
+);
+
 const UploadComponent: React.FC = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-  const [fileList, setFileList] = useState<UploadFile[]>(mock);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
@@ -66,19 +34,14 @@ const UploadComponent: React.FC = () => {
     setPreviewOpen(true);
   };
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    console.info(newFileList);
     setFileList(newFileList);
-
-  const uploadButton = (
-    <button style={{ border: 0, background: "none" }} type="button">
-      <PlusOutlined />
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </button>
-  );
+  };
   return (
     <div style={{ padding: "12px" }}>
       <Upload
-        action="http://localhost:3000/api/upload"
+        action="/api/upload/images"
         listType="picture-card"
         fileList={fileList}
         onPreview={handlePreview}
@@ -86,6 +49,7 @@ const UploadComponent: React.FC = () => {
       >
         {fileList.length >= 8 ? null : uploadButton}
       </Upload>
+
       {previewImage && (
         <Image
           wrapperStyle={{ display: "none" }}

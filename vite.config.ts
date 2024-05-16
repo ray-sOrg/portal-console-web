@@ -21,9 +21,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000", // 你要代理到的目标地址
-        changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, "") // 可选的重写路径
+        target: "http://127.0.0.1:5000", // 你要代理到的目标地址
+        changeOrigin: true
       }
     }
   }
