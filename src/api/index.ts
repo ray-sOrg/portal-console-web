@@ -7,7 +7,7 @@ interface ListParams {
 }
 
 interface ListData {
-  items: any[];
+  items: unknown[];
   total: number;
 }
 

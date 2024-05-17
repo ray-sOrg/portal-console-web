@@ -19,7 +19,7 @@ const defaultSwrConfig = {
   shouldRetryOnError: false,
   revalidateOnFocus: false,
   revalidateOnReconnect: false,
-  onError: err => {
+  onError: (err: unknown) => {
     console.error("SWR error:", err);
   }
 };
@@ -28,7 +28,7 @@ const fetcher = async <T>(
   url: string,
   method: string,
   token: string | null,
-  body?: any
+  body?: unknown
 ): Promise<ApiResponse<T>> => {
   const options: RequestInit = {
     method,

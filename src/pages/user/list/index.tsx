@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Flex, Button, Input, Modal } from "antd";
+import { Flex, Button, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import Table from "./table";
 import AddModal from "./add-user-modal";
