@@ -4,6 +4,7 @@ import ErrorPage from "./error-page";
 import Login from "./pages/login";
 import Home from "./home";
 import Upload from "./pages/upload";
+import User from "./pages/user/list";
 
 export default [
   {
@@ -15,6 +16,10 @@ export default [
     element: <Home />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "user",
+        element: <User />
+      },
       {
         path: "upload",
         element: <Upload />

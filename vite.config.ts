@@ -17,7 +17,8 @@ export default defineConfig({
       component: "/src/component/",
       assets: "/src/assets/",
       utils: "/src/utils/",
-      api: "/src/api/"
+      api: "/src/api/",
+      types: "/src/types/"
     }
   },
   server: {

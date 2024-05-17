@@ -1,80 +1,42 @@
-import useSWR, { SWRConfiguration, KeyedMutator } from "swr";
-import { useNavigate } from "react-router-dom";
-import { getToken } from "./index";
+import { Observable } from "rxjs";
+import { getToken } from "utils";
 
-interface ApiResponse<T> {
-  code: number;
-  message: string;
-  data: T | null;
+// 封装发送请求的方法
+function request<P = any, R = any>(
+  url: string,
+  method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
+  body: P | null = null
+): Observable<R> {
+  return new Observable(observer => {
+    fetch(url, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}` // 添加 token 到请求头
+      },
+      body: body ? JSON.stringify(body) : null,
+      credentials: "include"
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response?.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.code === 200) {
+          observer.next(data.data as R); // 发送数据到 Observable
+          observer.complete(); // 发送完成信号
+        } else if (data.code === 5000) {
+          window.location.href = "/login"; // 重定向到 /login 路由
+        } else {
+          throw new Error(data.message); // 抛出错误信息
+        }
+      })
+      .catch(error => {
+        observer.error(error); // 发送错误信息到 Observable
+      });
+  });
 }
 
-interface FetcherResponse<T> {
-  data: T | null;
-  error: Error | null;
-  isLoading: boolean;
-  mutate: KeyedMutator<ApiResponse<T>>;
-}
-
-const defaultSwrConfig = {
-  shouldRetryOnError: false
-};
-
-const fetcher = async <T>(
-  url: string,
-  method: string,
-  token: string | null,
-  body?: any
-): Promise<ApiResponse<T>> => {
-  const options: RequestInit = {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token ? `Bearer ${token}` : "" // 在请求头中添加 token
-    },
-    credentials: "include" // 包含 cookie
-  };
-
-  // 仅当请求方法为 POST、PUT、DELETE 等时才添加请求体
-  if (method !== "GET" && method !== "HEAD") {
-    options.body = JSON.stringify(body);
-  }
-
-  const response = await fetch(url, options);
-
-  const responseData: ApiResponse<T> = await response.json();
-
-  if (!response.ok) {
-    throw new Error(responseData.message);
-  }
-
-  return responseData;
-};
-
-const useFetch = <T>(
-  url: string,
-  method: string = "GET",
-  config?: Partial<SWRConfiguration<ApiResponse<T>, Error>>
-): FetcherResponse<T> => {
-  const token = getToken();
-  const navigate = useNavigate();
-
-  const { data, error, mutate } = useSWR<ApiResponse<T>, Error>(
-    [url, method, token],
-    ([url, method, token]: [string, string, string | null]) =>
-      fetcher<T>(url, method, token, {}),
-    Object.assign({}, defaultSwrConfig, config)
-  );
-
-  if (data && data.code === 5000) {
-    navigate("/login");
-  }
-
-  return {
-    data: data?.data || null,
-    error: error || null,
-    mutate,
-    isLoading: !data && !error
-  };
-};
-
-export default useFetch;
+export default request;

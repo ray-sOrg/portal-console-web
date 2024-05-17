@@ -1,11 +1,16 @@
 import { Menu, MenuProps } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
 type MenuClickEventHandler = Required<MenuProps>["onClick"];
 
 const items: MenuItem[] = [
+  {
+    key: "user",
+    icon: <UserOutlined />,
+    label: "用户"
+  },
   {
     key: "upload",
     icon: <UploadOutlined />,
