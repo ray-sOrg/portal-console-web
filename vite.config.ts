@@ -15,14 +15,17 @@ export default defineConfig({
     alias: {
       "@": "/src/",
       component: "/src/component/",
-      assets: "/src/assets/"
+      assets: "/src/assets/",
+      utils: "/src/utils/",
+      api: "/src/api/"
     }
   },
   server: {
     proxy: {
       "/api": {
         target: "http://127.0.0.1:5000", // 你要代理到的目标地址
-        changeOrigin: true
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, "/") // 将 /api 重写为 /
       }
     }
   }
