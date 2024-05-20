@@ -18,6 +18,19 @@ const items: MenuItem[] = [
   }
 ];
 
+const getActiveRoute = (pathname: string, items: MenuItem[]): string[] => {
+  const activeKeys: string[] = [];
+  items.forEach(item => {
+    if (item && item.key && pathname.startsWith(`/${item.key}`)) {
+      activeKeys.push(item.key as string);
+    }
+  });
+  return activeKeys;
+};
+
+const currentPathname = window.location.pathname;
+const activeRoutes = getActiveRoute(currentPathname, items);
+
 function Sider() {
   const navigate = useNavigate();
 
@@ -32,6 +45,7 @@ function Sider() {
       mode="inline"
       items={items}
       onClick={handleClick}
+      defaultSelectedKeys={activeRoutes}
     />
   );
 }
