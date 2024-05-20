@@ -25,7 +25,7 @@ function request<P = any, R = any>(
       })
       .then(data => {
         if (data.code === 200) {
-          observer.next(data.data as R); // 发送数据到 Observable
+          observer.next(data as R); // 发送数据到 Observable
           observer.complete(); // 发送完成信号
         } else if (data.code === 5000) {
           window.location.href = "/login"; // 重定向到 /login 路由

@@ -2,6 +2,9 @@
     "words": [
         "sider",
         "antd",
-        "wireframe"
+        "wireframe",
+        "zustand",
+        "ahooks",
+        "Popconfirm"
     ]
 }

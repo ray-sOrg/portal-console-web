@@ -1,25 +1,37 @@
-import { useState } from "react";
-import { Flex, Button, Input } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Subscription } from "rxjs";
+import { useDebounceEffect } from "ahooks";
+import userListStore from "./userListContext";
 import Table from "./table";
 import AddModal from "./add-user-modal";
-
-const { Search } = Input;
+import Toolbar from "./toolbar";
+import useUserList from "./useUserList";
 
 function User() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { keyword, page, isModalOpen, setIsModalOpen } = userListStore();
+  const { fetch } = useUserList();
+
+  useDebounceEffect(
+    () => {
+      let subscription: Subscription | null = fetch();
+      return () => {
+        if (subscription) {
+          subscription.unsubscribe();
+        }
+      };
+    },
+    [page, keyword],
+    { leading: true }
+  );
 
   const handleOk = () => {
     setIsModalOpen(false);
+    fetch();
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
-  const handleOpenAddUserModal = () => {
-    setIsModalOpen(true);
-  };
   return (
     <div style={{ padding: "12px" }}>
       <AddModal
@@ -27,34 +39,7 @@ function User() {
         onOk={handleOk}
         onCancel={handleCancel}
       />
-      <Flex
-        style={{
-          padding: 20,
-          marginBottom: "20px",
-          backgroundColor: "#fff",
-          borderRadius: "4px"
-        }}
-        gap="middle"
-        justify="space-between"
-      >
-        <div>
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={handleOpenAddUserModal}
-          >
-            添加用户
-          </Button>
-        </div>
-        <div>
-          <Search
-            placeholder=""
-            allowClear
-            onSearch={() => {}}
-            style={{ width: 200 }}
-          />
-        </div>
-      </Flex>
+      <Toolbar />
       <Table />
     </div>
   );
