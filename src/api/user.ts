@@ -6,8 +6,15 @@ import {
   ApiRequestUserList,
   ApiResponseUserList,
   ApiRequestDeleteUser,
-  ApiResponseDeleteUser
+  ApiResponseDeleteUser,
+  ApiResponseLoginUserInfo
 } from "types";
+
+// 获取用户登录信息的接口
+export function getLoginUserInfo(): Observable<ApiResponseLoginUserInfo> {
+  const url = "/api/user/login/info";
+  return request<null, ApiResponseLoginUserInfo>(url, "GET");
+}
 
 // 获取列表
 export function getUserList(

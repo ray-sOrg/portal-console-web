@@ -1,13 +1,51 @@
+import Cookies from "js-cookie";
 import every from "lodash-es/every";
 import isNil from "lodash-es/isNil";
 import isEmpty from "lodash-es/isEmpty";
-export function getToken() {
-  const tokenFromStorage = localStorage.getItem("token");
-  const tokenFromCookie = document.cookie.replace(
-    /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
-    "$1"
-  );
+// 获取 cookie
+export function getCookie(key: string): string | undefined {
+  return Cookies.get(key);
+}
+
+// 获取 localStorage
+export function getLocalStorage(key: string): string | null {
+  return localStorage.getItem(key);
+}
+
+// 设置 cookie
+export function setCookie(
+  key: string,
+  value: any,
+  expiresDays: number = 7
+): void {
+  if (typeof key !== "string" || typeof value === "undefined") {
+    throw new Error("Key must be a string and value must be defined");
+  }
+  Cookies.set(key, value, { expires: expiresDays });
+}
+
+// 设置 localStorage
+export function setLocalStorage(key: string, value: any): void {
+  if (typeof key !== "string" || typeof value === "undefined") {
+    throw new Error("Key must be a string and value must be defined");
+  }
+  localStorage.setItem(key, value);
+}
+
+// 获取 token
+export function getToken(): string {
+  const tokenFromStorage = getLocalStorage("token");
+  const tokenFromCookie = getCookie("token");
   return tokenFromStorage || tokenFromCookie || "";
+}
+
+// 设置 token
+export function setToken(token: string, expiresDays: number = 7): void {
+  if (typeof token !== "string" || typeof expiresDays !== "number") {
+    throw new Error("Token must be a string and expiresDays must be a number");
+  }
+  // 设置 localStorage
+  setLocalStorage("token", token);
 }
 
 export function areAllValuesNonEmpty<T extends Record<string, any>>(

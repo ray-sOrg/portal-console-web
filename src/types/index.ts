@@ -3,6 +3,24 @@ export interface Page {
   pageSize: number;
 }
 
+export interface ApiRequestLogin {
+  username: string;
+  password: string;
+}
+
+export interface ApiResponseLogin {
+  code: number;
+  message: string;
+  data: User;
+  token?: string;
+}
+
+export interface ApiResponseAuthCheckToken {
+  code: number;
+  message: string;
+  data: User;
+}
+
 export interface ApiRequestUserList {
   pageNumber: number;
   pageSize: number;
@@ -47,4 +65,10 @@ export interface ApiResponseDeleteUser {
   data: {
     user_id: string;
   };
+}
+
+export interface ApiResponseLoginUserInfo {
+  code: number;
+  message: string;
+  data: User;
 }

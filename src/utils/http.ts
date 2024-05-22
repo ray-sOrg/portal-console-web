@@ -1,4 +1,5 @@
 import { Observable } from "rxjs";
+import { notification } from "antd";
 import { getToken } from "utils";
 
 // 封装发送请求的方法
@@ -19,22 +20,20 @@ function request<P = any, R = any>(
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error(response?.statusText);
+          notification.open({ type: "error", message: response.statusText });
+          // HTTP 状态码不为 200，抛出系统级错误
+          throw new Error("System error: " + response.statusText);
         }
         return response.json();
       })
       .then(data => {
-        if (data.code === 200) {
-          observer.next(data as R); // 发送数据到 Observable
-          observer.complete(); // 发送完成信号
-        } else if (data.code === 5000) {
-          window.location.href = "/login"; // 重定向到 /login 路由
-        } else {
-          throw new Error(data.message); // 抛出错误信息
-        }
+        // 业务逻辑正常，向观察者发送数据
+        observer.next(data as R);
+        observer.complete();
       })
       .catch(error => {
-        observer.error(error); // 发送错误信息到 Observable
+        // 捕获所有可能的错误并通知观察者
+        observer.error(error);
       });
   });
 }
