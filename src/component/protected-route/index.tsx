@@ -19,7 +19,7 @@ const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
           }
           setLoading(false);
         },
-        error: error => {
+        error: () => {
           setIsAuthenticated(false);
           setLoading(false);
         }
