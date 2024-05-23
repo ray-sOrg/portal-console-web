@@ -1,6 +1,5 @@
 import { Observable } from "rxjs";
 import { notification } from "antd";
-import { getToken } from "utils";
 
 // 封装发送请求的方法
 function request<P = any, R = any>(
@@ -12,8 +11,8 @@ function request<P = any, R = any>(
     fetch(url, {
       method,
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken()}` // 添加 token 到请求头
+        "Content-Type": "application/json"
+        // "X-CSRF-TOKEN": getToken()
       },
       body: body ? JSON.stringify(body) : null,
       credentials: "include"

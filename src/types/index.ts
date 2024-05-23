@@ -15,6 +15,12 @@ export interface ApiResponseLogin {
   token?: string;
 }
 
+export interface ApiResponseLoginOut {
+  code: number;
+  message: string;
+  data: User;
+}
+
 export interface ApiResponseAuthCheckToken {
   code: number;
   message: string;

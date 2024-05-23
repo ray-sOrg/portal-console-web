@@ -32,22 +32,6 @@ export function setLocalStorage(key: string, value: any): void {
   localStorage.setItem(key, value);
 }
 
-// 获取 token
-export function getToken(): string {
-  const tokenFromStorage = getLocalStorage("token");
-  const tokenFromCookie = getCookie("token");
-  return tokenFromStorage || tokenFromCookie || "";
-}
-
-// 设置 token
-export function setToken(token: string, expiresDays: number = 7): void {
-  if (typeof token !== "string" || typeof expiresDays !== "number") {
-    throw new Error("Token must be a string and expiresDays must be a number");
-  }
-  // 设置 localStorage
-  setLocalStorage("token", token);
-}
-
 export function areAllValuesNonEmpty<T extends Record<string, any>>(
   obj: T
 ): boolean {

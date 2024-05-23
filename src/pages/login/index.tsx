@@ -1,6 +1,7 @@
 import { Button, Form, Input, Flex, notification } from "antd";
+import { useMemoizedFn } from "ahooks";
+import { useNavigate } from "react-router-dom";
 import { login } from "api";
-import { setToken } from "utils";
 import type { FormProps } from "antd";
 
 type FieldType = {
@@ -8,28 +9,38 @@ type FieldType = {
   password: string;
 };
 
-const onFinish: FormProps<FieldType>["onFinish"] = values => {
-  login(values).subscribe(res => {
-    if (res?.code !== 200) {
-      return notification.open({
-        type: "error",
-        message: res?.message
-      });
-    }
-    if (res.code === 200) {
-      if (res?.token) {
-        setToken(res.token);
-        window.location.href = "/";
-      }
-    }
-  });
-};
-
-const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = errorInfo => {
-  console.log("Failed:", errorInfo);
-};
-
 function Login() {
+  const navigate = useNavigate();
+
+  const onFinish: FormProps<FieldType>["onFinish"] = useMemoizedFn(values => {
+    login(values).subscribe(res => {
+      if (res?.code !== 200) {
+        return notification.open({
+          type: "error",
+          message: res?.message
+        });
+      }
+      if (res.code === 200) {
+        if (res?.token) {
+          notification.open({
+            type: "success",
+            message: `用户${res.data?.username}登录成功～`,
+            duration: 800
+          });
+          setTimeout(() => {
+            navigate("/");
+          }, 800);
+        }
+      }
+    });
+  });
+
+  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = useMemoizedFn(
+    errorInfo => {
+      console.log("Failed:", errorInfo);
+    }
+  );
+
   return (
     <div
       style={{
