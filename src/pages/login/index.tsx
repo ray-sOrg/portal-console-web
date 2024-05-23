@@ -20,17 +20,8 @@ function Login() {
           message: res?.message
         });
       }
-      if (res.code === 200) {
-        if (res?.token) {
-          notification.open({
-            type: "success",
-            message: `用户${res.data?.username}登录成功～`,
-            duration: 800
-          });
-          setTimeout(() => {
-            navigate("/");
-          }, 800);
-        }
+      if (res.code === 200 && res?.token) {
+        navigate("/");
       }
     });
   });
