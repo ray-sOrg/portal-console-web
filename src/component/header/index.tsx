@@ -22,9 +22,15 @@ function Header() {
     });
   });
 
+  const handleHome = useMemoizedFn(() => {
+    navigate("/");
+  });
+
   return (
     <div className={styles.header}>
-      <span className={styles.title}>Ray</span>
+      <span className={styles.title} onClick={handleHome}>
+        Ray
+      </span>
       <div className={styles.info}>
         <Avatar shape="square" size={42}>
           {firstChart}

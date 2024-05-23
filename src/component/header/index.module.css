@@ -6,6 +6,7 @@
 }
 
 .title {
+  cursor: pointer;
   color: #f5f5f5;
   font-family: "kust", sans-serif;
   font-size: 48px;
