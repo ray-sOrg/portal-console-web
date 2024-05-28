@@ -26,6 +26,10 @@ jobs:
         with:
           node-version: "20"
 
+      # 配置Git参数
+      - name: Configure Git
+        run: git config core.ignorecase false
+
       #缓存依赖
       - name: Cache nodemodules
         uses: actions/cache@main
