@@ -1,5 +1,5 @@
 import { Menu, MenuProps } from "antd";
-import { UploadOutlined, UserOutlined } from "@ant-design/icons";
+import { FileJpgOutlined, UserOutlined, ToolOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -12,9 +12,14 @@ const items: MenuItem[] = [
     label: "用户"
   },
   {
-    key: "upload",
-    icon: <UploadOutlined />,
-    label: "上传图片"
+    key: "image",
+    icon: <FileJpgOutlined />,
+    label: "图片管理"
+  },
+  {
+    key: "test",
+    icon: <ToolOutlined />,
+    label: "测试"
   }
 ];
 

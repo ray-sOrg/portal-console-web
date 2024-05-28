@@ -1,3 +1,9 @@
+export interface BaseApiResponse<T> {
+  code: number;
+  message: string;
+  data: T;
+}
+
 export interface Page {
   pageNumber: number;
   pageSize: number;
@@ -78,3 +84,6 @@ export interface ApiResponseLoginUserInfo {
   message: string;
   data: User;
 }
+
+export interface ApiRequestSyncImage {}
+export interface ApiResponseSyncImage extends BaseApiResponse<unknown> {}

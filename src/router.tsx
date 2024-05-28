@@ -3,8 +3,9 @@ import { RouteObject } from "react-router-dom";
 import ErrorPage from "./error-page";
 import Login from "./pages/login";
 import Home from "./home";
-import Upload from "./pages/upload";
+import Image from "./pages/image";
 import User from "./pages/user/list";
+import Test from "./pages/test";
 
 export default [
   {
@@ -21,8 +22,12 @@ export default [
         element: <User />
       },
       {
-        path: "upload",
-        element: <Upload />
+        path: "image",
+        element: <Image />
+      },
+      {
+        path: "test",
+        element: <Test />
       }
     ]
   }
