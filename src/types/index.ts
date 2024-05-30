@@ -86,4 +86,19 @@ export interface ApiResponseLoginUserInfo {
 }
 
 export interface ApiRequestSyncImage {}
-export interface ApiResponseSyncImage extends BaseApiResponse<unknown> {}
+
+interface SyncImage {}
+export interface ApiResponseSyncImage extends BaseApiResponse<SyncImage> {
+  task_id: string;
+}
+
+interface SyncImageProgress {
+  state: string;
+  current: number;
+  total: number;
+  status: string;
+  result?: unknown;
+}
+
+export interface ApiResponseSyncImageProgress
+  extends BaseApiResponse<SyncImageProgress> {}
