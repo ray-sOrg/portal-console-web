@@ -32,10 +32,9 @@ function ImageToolbar() {
             const sub = setInterval(() => {
               watchOssImagesProgress(taskId).subscribe({
                 next: data => {
-                  console.log("Task Status:", data);
                   setData(data);
                   // 在这里处理响应数据
-                  if (data.data.total === data.data.current) {
+                  if (data.data.state === "SUCCESS") {
                     clearInterval(sub); // 停止轮询
                     setSubscription(null); // 清除订阅
                   }
@@ -75,7 +74,7 @@ function ImageToolbar() {
       >
         <p>{taskId}</p>
         <p>
-          <span>{data?.current}</span>：<span>{data?.total}</span>
+          <span>{data?.state}</span>：<span>{data?.total}</span>
         </p>
       </Modal>
       <Flex

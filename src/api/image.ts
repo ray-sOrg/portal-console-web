@@ -12,6 +12,6 @@ export function syncOssImages(): Observable<ApiResponseSyncImage> {
 export function watchOssImagesProgress(
   taskId: string
 ): Observable<ApiResponseSyncImageProgress> {
-  const url = `/image/task_status/${taskId}`;
+  const url = `/api/image/task_status/${taskId}`;
   return request<null, ApiResponseSyncImageProgress>(url, "GET");
 }
