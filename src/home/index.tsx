@@ -1,9 +1,9 @@
 import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
-import HeaderComponent from "component/header";
-import SiderComponent from "component/sider";
-import FooterComponent from "component/footer";
-import ProtectedRouter from "component/protected-route";
+import HeaderComponent from "@/component/header";
+import SiderComponent from "@/component/sider";
+import FooterComponent from "@/component/footer";
+import ProtectedRouter from "@/component/protected-route";
 
 const { Header, Sider, Content, Footer } = Layout;
 

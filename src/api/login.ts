@@ -1,7 +1,11 @@
 import { Observable } from "rxjs";
-import request from "utils/http";
+import request from "@/utils/http";
 
-import { ApiRequestLogin, ApiResponseLogin, ApiResponseLoginOut } from "types";
+import {
+  ApiRequestLogin,
+  ApiResponseLogin,
+  ApiResponseLoginOut
+} from "@/types";
 
 // 登录
 export function login(data: ApiRequestLogin): Observable<ApiResponseLogin> {

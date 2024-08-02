@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Page, User } from "types";
+import { Page, User } from "@/types";
 
 interface UserListStore {
   isModalOpen: boolean;

@@ -1,5 +1,9 @@
 import { Menu, MenuProps } from "antd";
-import { FileJpgOutlined, UserOutlined, ToolOutlined } from "@ant-design/icons";
+import {
+  FileJpgOutlined,
+  UserOutlined,
+  SketchOutlined
+} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -17,10 +21,15 @@ const items: MenuItem[] = [
     label: "图片管理"
   },
   {
-    key: "test",
-    icon: <ToolOutlined />,
-    label: "测试"
+    key: "wedding",
+    icon: <SketchOutlined />,
+    label: "婚礼"
   }
+  // {
+  //   key: "test",
+  //   icon: <ToolOutlined />,
+  //   label: "测试"
+  // }
 ];
 
 const getActiveRoute = (pathname: string, items: MenuItem[]): string[] => {

@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { flask_env, celery } from "api";
+import { flask_env, celery } from "@/api";
 
 function Test() {
   const handleTestEnv = () => {

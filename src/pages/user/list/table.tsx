@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import userListStore from "./userListContext";
 import useUserList from "./useUserList";
 import type { TableProps } from "antd";
-import type { User } from "types";
+import type { User } from "@/types";
 
 const getRoleColor = (role: string) => {
   switch (role) {

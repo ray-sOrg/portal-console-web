@@ -1,9 +1,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import svgr from "vite-plugin-svgr";
+import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), svgr()],
   css: {
     transformer: "lightningcss"
   },
@@ -12,13 +14,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": "/src/",
-      component: "/src/component/",
-      assets: "/src/assets/",
-      utils: "/src/utils/",
-      api: "/src/api/",
-      types: "/src/types/",
-      store: "/src/store/"
+      "@": path.resolve(__dirname, "src")
     }
   },
   server: {
@@ -28,6 +24,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, "/") // 将 /api 重写为 /
       }
+      // "/api": {
+      //   target: "https://console.ray321.cn",
+      //   changeOrigin: true,
+      //   rewrite: path => path.replace(/^\/api/, "/api")
+      // }
     }
   }
 });

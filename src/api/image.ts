@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
-import request from "utils/http";
-import { ApiResponseSyncImage, ApiResponseSyncImageProgress } from "types";
+import request from "@/utils/http";
+import { ApiResponseSyncImage, ApiResponseSyncImageProgress } from "@/types";
 
 // 同步oss的图片到数据库
 export function syncOssImages(): Observable<ApiResponseSyncImage> {

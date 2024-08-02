@@ -12,7 +12,6 @@ function request<P = any, R = any>(
       method,
       headers: {
         "Content-Type": "application/json"
-        // "X-CSRF-TOKEN": getToken()
       },
       body: body ? JSON.stringify(body) : null,
       credentials: "include"

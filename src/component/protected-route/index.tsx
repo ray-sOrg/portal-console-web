@@ -2,8 +2,8 @@ import React, { PropsWithChildren, useState } from "react";
 import { Spin } from "antd";
 import { useMemoizedFn, useMount } from "ahooks";
 import { Navigate } from "react-router-dom";
-import { getLoginUserInfo } from "api";
-import useGlobalStore from "store";
+import { getLoginUserInfo } from "@/api";
+import useGlobalStore from "@/store";
 
 const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
   const [loading, setLoading] = useState(true);

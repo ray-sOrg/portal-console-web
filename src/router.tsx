@@ -5,6 +5,7 @@ import Login from "./pages/login";
 import Home from "./home";
 import Image from "./pages/images";
 import User from "./pages/user/list";
+import Wedding from "./pages/wedding";
 import Test from "./pages/test";
 
 export default [
@@ -24,6 +25,10 @@ export default [
       {
         path: "image",
         element: <Image />
+      },
+      {
+        path: "wedding",
+        element: <Wedding />
       },
       {
         path: "test",

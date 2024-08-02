@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import request from "utils/http";
+import request from "@/utils/http";
 
 // 测试flask的env
 export function flask_env(): Observable<any> {

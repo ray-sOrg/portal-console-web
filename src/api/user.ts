@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import request from "utils/http";
+import request from "@/utils/http";
 import {
   ApiRequestAddUser,
   ApiResponseAddUser,
@@ -8,7 +8,7 @@ import {
   ApiRequestDeleteUser,
   ApiResponseDeleteUser,
   ApiResponseLoginUserInfo
-} from "types";
+} from "@/types";
 
 // 获取用户登录信息的接口
 export function getLoginUserInfo(): Observable<ApiResponseLoginUserInfo> {

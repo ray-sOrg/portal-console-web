@@ -1,6 +1,6 @@
 import { Subscription } from "rxjs";
 import { useMemoizedFn } from "ahooks";
-import { getUserList, deleteUser } from "api";
+import { getUserList, deleteUser } from "@/api";
 import { notification } from "antd";
 import useUserListStore from "./userListContext";
 

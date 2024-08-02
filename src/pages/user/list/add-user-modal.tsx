@@ -8,7 +8,7 @@ import {
   Flex,
   notification
 } from "antd";
-import { addUser } from "api";
+import { addUser } from "@/api";
 
 interface Props {
   isModalOpen: boolean;

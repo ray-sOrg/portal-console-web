@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Flex, Button, Input, Modal } from "antd";
+import { Flex, Button, Input, Modal, Popconfirm } from "antd";
 import { FileSyncOutlined, SyncOutlined } from "@ant-design/icons";
 import { useMemoizedFn } from "ahooks";
-import { syncOssImages, watchOssImagesProgress } from "api";
+import { syncOssImages, watchOssImagesProgress } from "@/api";
 
 const { Search } = Input;
 
@@ -94,13 +94,18 @@ function ImageToolbar() {
             style={{ marginRight: 12 }}
             onClick={() => {}}
           />
-          <Button
-            type="primary"
-            icon={<FileSyncOutlined />}
-            onClick={handleSyncImage}
+          <Popconfirm
+            title="确认"
+            description="确定同步OSS？"
+            okText="确认"
+            cancelText="取消"
+            onConfirm={handleSyncImage}
+            okType="danger"
           >
-            同步OSS
-          </Button>
+            <Button danger type="primary" icon={<FileSyncOutlined />}>
+              同步OSS
+            </Button>
+          </Popconfirm>
         </div>
         <div>
           <Search
