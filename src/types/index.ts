@@ -102,3 +102,23 @@ interface SyncImageProgress {
 
 export interface ApiResponseSyncImageProgress
   extends BaseApiResponse<SyncImageProgress> {}
+
+export interface ApiRequestWeddingMusicList {
+  pageNumber: number;
+  pageSize: number;
+  keyword?: string;
+}
+
+export interface WeddingMusic {
+  id: string | number;
+  title: string;
+  artist: string;
+  path: string;
+  album?: string;
+}
+export interface ApiResponseWeddingMusic {
+  code: number;
+  message: string;
+  data: WeddingMusic[];
+  total: number;
+}

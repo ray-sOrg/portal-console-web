@@ -1,5 +1,13 @@
+import Toolbar from "./toolbar";
+import List from "./list";
+
 function Music() {
-  return <div>Music</div>;
+  return (
+    <div>
+      <Toolbar />
+      <List />
+    </div>
+  );
 }
 
 export default Music;

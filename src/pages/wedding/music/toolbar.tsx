@@ -9,9 +9,7 @@ function MusicToolbar() {
     <>
       <Flex
         style={{
-          padding: 20,
           marginBottom: "20px",
-          backgroundColor: "#fff",
           borderRadius: "4px"
         }}
         gap="middle"
