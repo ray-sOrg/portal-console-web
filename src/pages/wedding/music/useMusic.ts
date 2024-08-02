@@ -41,24 +41,24 @@ const useMusicList = () => {
     return subscription; // 返回 subscription
   });
 
-  const deleteUserFn = useMemoizedFn((uuid: string) => {
-    // console.log("deleteUserFn", uuid);
-    // deleteUser({ uuid }).subscribe({
-    //   next: data => {
-    //     if (data.code === 200) {
-    //       fetch();
-    //     }
-    //   },
-    //   error: error => {
-    //     notification.open({
-    //       type: "error",
-    //       message: error?.message
-    //     });
-    //   }
-    // });
-  });
+  // const deleteUserFn = useMemoizedFn((uuid: string) => {
+  // console.log("deleteUserFn", uuid);
+  // deleteUser({ uuid }).subscribe({
+  //   next: data => {
+  //     if (data.code === 200) {
+  //       fetch();
+  //     }
+  //   },
+  //   error: error => {
+  //     notification.open({
+  //       type: "error",
+  //       message: error?.message
+  //     });
+  //   }
+  // });
+  // });
 
-  return { fetch, deleteUser: deleteUserFn };
+  return { fetch };
 };
 
 export default useMusicList;
