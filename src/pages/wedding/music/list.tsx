@@ -1,6 +1,8 @@
 import { useDebounceEffect } from "ahooks";
 import { Subscription } from "rxjs";
 import { Table } from "antd";
+import { CaretRightOutlined } from "@ant-design/icons";
+import { CDN_CONFIG } from "@/config/index";
 import userMusicStore from "./userMusicContext";
 import useMusic from "./useMusic";
 import type { TableProps } from "antd";
@@ -25,35 +27,52 @@ function List() {
 
   const columns: TableProps<(typeof list)[number]>["columns"] = [
     {
-      title: "id",
+      title: "ID",
       dataIndex: "id",
       key: "id"
     },
     {
-      title: "title",
+      title: "歌名",
       dataIndex: "title",
       key: "title"
     },
     {
-      title: "artist",
+      title: "歌手",
       dataIndex: "artist",
       key: "artist"
     },
     {
-      title: "album",
+      title: "专辑",
       dataIndex: "album",
       key: "album"
     },
     {
-      title: "path",
+      title: "路径",
       dataIndex: "path",
-      key: "path"
+      key: "path",
+      render: _val => {
+        return `${CDN_CONFIG?.url}/${_val}`;
+      }
+    },
+    {
+      title: "操作",
+      dataIndex: "action",
+      key: "action",
+      render: (_, record) => {
+        return (
+          <CaretRightOutlined
+            onClick={() => {
+              window.open(`${CDN_CONFIG?.url}/${record.path}`);
+            }}
+          />
+        );
+      }
     }
   ];
 
   return (
     <div>
-      <Table columns={columns} dataSource={list} />
+      <Table rowKey="id" columns={columns} dataSource={list} />
     </div>
   );
 }

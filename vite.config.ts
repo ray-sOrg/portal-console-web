@@ -19,16 +19,16 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api": {
-        target: "http://127.0.0.1:5000", // 你要代理到的目标地址
-        changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, "/") // 将 /api 重写为 /
-      }
       // "/api": {
-      //   target: "https://console.ray321.cn",
+      //   target: "http://127.0.0.1:5000", // 你要代理到的目标地址
       //   changeOrigin: true,
-      //   rewrite: path => path.replace(/^\/api/, "/api")
+      //   rewrite: path => path.replace(/^\/api/, "/") // 将 /api 重写为 /
       // }
+      "/api": {
+        target: "https://console.ray321.cn",
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, "/api")
+      }
     }
   }
 });
