@@ -1,4 +1,3 @@
-// @ts-nocheck
 import {
   Modal,
   Form,
@@ -10,8 +9,10 @@ import {
   Upload
 } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
+import { useMemoizedFn } from "ahooks";
+import pick from "lodash-es/pick";
 import useGlobalStore from "@/store";
-import { addUser } from "@/api";
+import { addWeddingMusic } from "@/api";
 import userMusicStore from "./userMusicContext";
 import useMusic from "./useMusic";
 import type { UploadProps } from "antd";
@@ -21,8 +22,8 @@ const { Dragger } = Upload;
 type FieldType = {
   title: string;
   artist: string;
-  file: any;
-  path?: string;
+  url: string;
+  file?: any;
   album?: string;
 };
 
@@ -30,7 +31,7 @@ const initialValues = {
   title: "",
   artist: "",
   file: null,
-  path: "",
+  url: "",
   album: ""
 };
 
@@ -38,19 +39,18 @@ function ModalAdd() {
   const credentials = useGlobalStore(state => state.credentials!);
   const { isModalOpen, setIsModalOpen } = userMusicStore();
 
-  console.info("credentials", credentials);
-
   const { fetch } = useMusic();
 
   const [form] = Form.useForm();
 
-  const onFinish: FormProps<FieldType>["onFinish"] = values => {
-    addUser(values).subscribe({
+  const onFinish: FormProps<FieldType>["onFinish"] = useMemoizedFn(values => {
+    const params = pick(values, ["title", "artist", "url", "album"]);
+    addWeddingMusic(params).subscribe({
       next: data => {
         if (data.code === 200) {
           notification.open({
             type: "success",
-            message: `用户${values.username}创建成功～`
+            message: "创建成功～"
           });
           form.resetFields();
           handleOk();
@@ -63,48 +63,49 @@ function ModalAdd() {
         });
       }
     });
-  };
+  });
 
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = errorInfo => {
-    console.log("Failed:", errorInfo);
-  };
+  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = useMemoizedFn(
+    errorInfo => {
+      console.log("Failed:", errorInfo);
+    }
+  );
 
-  const handleUploadChange: UploadProps["onChange"] = ({ fileList }) => {
-    console.log("Aliyun OSS:", fileList);
-    // onChange?.([...fileList]);
-  };
+  const handleUploadChange: UploadProps["onChange"] = useMemoizedFn(
+    ({ file }) => {
+      if (file.status === "done" && file.url) {
+        form.setFieldValue("url", file.url);
+      }
+    }
+  );
 
-  const handleUploadRemove = (file: UploadFile) => {
-    const files = (value || []).filter(v => v.url !== file.url);
+  const handleUploadRemove = useMemoizedFn(() => {
+    form.setFieldValue("file", null);
+  });
 
-    // if (onChange) {
-    //   onChange(files);
-    // }
-  };
-
-  const getExtraData: UploadProps["data"] = file => ({
+  const getExtraData: UploadProps["data"] = useMemoizedFn(file => ({
     key: `${credentials?.dir}${file.name}`,
     OSSAccessKeyId: credentials?.accessId,
     policy: credentials?.policy,
     Signature: credentials?.signature
-  });
+  }));
 
-  const handleBeforeUpload: UploadProps["beforeUpload"] = async file => {
-    if (!credentials) return false;
-    const suffix = file.name.slice(file.name.lastIndexOf("."));
-    const filename = Date.now() + suffix;
-    file.url = `${credentials.dir}${filename}`;
-    return true;
-  };
+  const handleBeforeUpload: UploadProps["beforeUpload"] = useMemoizedFn(
+    async file => {
+      if (!credentials) return false;
+      file.url = `${credentials.dir}${file.name}`;
+      return true;
+    }
+  );
 
-  const handleOk = () => {
+  const handleOk = useMemoizedFn(() => {
     setIsModalOpen(false);
     fetch();
-  };
+  });
 
-  const handleCancel = () => {
+  const handleCancel = useMemoizedFn(() => {
     setIsModalOpen(false);
-  };
+  });
 
   if (!credentials) {
     return null;
@@ -118,7 +119,7 @@ function ModalAdd() {
       onCancel={handleCancel}
     >
       <Form
-        name="add"
+        name="add-form"
         form={form}
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}

@@ -143,3 +143,18 @@ export interface ApiResponseWeddingImage {
   data: WeddingImage[];
   total: number;
 }
+
+export interface ApiRequestAddWeddingMusic {
+  title: string;
+  artist: string;
+  url: string;
+  album?: string;
+}
+
+export interface ApiResponseAddWeddingMusic {
+  code: number;
+  message: string;
+  data: {
+    music_id: string;
+  };
+}
