@@ -83,23 +83,18 @@ function ModalAdd() {
   };
 
   const getExtraData: UploadProps["data"] = file => ({
-    key: file.url,
-    OSSAccessKeyId: credentials.OSSAccessKeyId,
-    policy: credentials.policy,
-    Signature: credentials.Signature
+    key: `${OSSData?.dir}${file.name}`,
+    OSSAccessKeyId: OSSData?.accessId,
+    policy: OSSData?.policy,
+    Signature: OSSData?.signature
   });
 
   const handleBeforeUpload: UploadProps["beforeUpload"] = async file => {
     if (!credentials) return false;
-
     const suffix = file.name.slice(file.name.lastIndexOf("."));
-    // const filename =suffix;
-    console.log("file.suffix", suffix);
-
-    // @ts-ignore
-    file.url = credentials.dir + suffix;
-
-    return file;
+    const filename = Date.now() + suffix;
+    file.url = `${credentials.dir}${filename}`;
+    return true;
   };
 
   const handleOk = () => {
@@ -169,7 +164,7 @@ function ModalAdd() {
           <Dragger
             name="file"
             multiple={false}
-            action={credentials.endpoint}
+            action={credentials.host}
             onChange={handleUploadChange}
             onRemove={handleUploadRemove}
             data={getExtraData}

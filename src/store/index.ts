@@ -3,14 +3,11 @@ import { create } from "zustand";
 import type { User } from "@/types";
 
 interface Credentials {
-  OSSAccessKeyId: string;
-  Signature: string;
-  bucket: string;
-  endpoint: string;
+  dir: string;
+  host: string;
+  accessId: string;
   policy: string;
-  "x-oss-credential": string;
-  "x-oss-date": string;
-  "x-oss-signature-version": string;
+  signature: string;
 }
 interface GLobalStore {
   user: User | null;
