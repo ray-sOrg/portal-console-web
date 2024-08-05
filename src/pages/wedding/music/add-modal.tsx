@@ -44,26 +44,28 @@ function ModalAdd() {
   const [form] = Form.useForm<FieldType>();
 
   const onFinish: FormProps<FieldType>["onFinish"] = values => {
-    console.log("values", values);
-    const params = pick(values, ["title", "artist", "url", "album"]);
-    addWeddingMusic(params).subscribe({
-      next: data => {
-        if (data.code === 200) {
+    const url = values.file?.file?.url;
+    if (url) {
+      const params = pick(values, ["title", "artist", "album"]);
+      addWeddingMusic({ ...params, url }).subscribe({
+        next: data => {
+          if (data.code === 200) {
+            notification.open({
+              type: "success",
+              message: "创建成功～"
+            });
+            form.resetFields();
+            handleOk();
+          }
+        },
+        error: error => {
           notification.open({
-            type: "success",
-            message: "创建成功～"
+            type: "error",
+            message: error?.message
           });
-          form.resetFields();
-          handleOk();
         }
-      },
-      error: error => {
-        notification.open({
-          type: "error",
-          message: error?.message
-        });
-      }
-    });
+      });
+    }
   };
 
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = useMemoizedFn(
@@ -74,7 +76,6 @@ function ModalAdd() {
 
   const handleUploadChange: UploadProps["onChange"] = ({ file }) => {
     if (file.status === "done" && file.url) {
-      console.log("handleUploadChange", file.url);
       form.setFieldValue("url", file.url);
     }
   };
