@@ -41,9 +41,9 @@ function ModalAdd() {
 
   const { fetch } = useMusic();
 
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<FieldType>();
 
-  const onFinish: FormProps<FieldType>["onFinish"] = useMemoizedFn(values => {
+  const onFinish: FormProps<FieldType>["onFinish"] = values => {
     console.log("values", values);
     const params = pick(values, ["title", "artist", "url", "album"]);
     addWeddingMusic(params).subscribe({
@@ -64,7 +64,7 @@ function ModalAdd() {
         });
       }
     });
-  });
+  };
 
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = useMemoizedFn(
     errorInfo => {
@@ -72,18 +72,16 @@ function ModalAdd() {
     }
   );
 
-  const handleUploadChange: UploadProps["onChange"] = useMemoizedFn(
-    ({ file }) => {
-      if (file.status === "done" && file.url) {
-        console.log("handleUploadChange", file);
-        form.setFieldValue("url", file.url);
-      }
+  const handleUploadChange: UploadProps["onChange"] = ({ file }) => {
+    if (file.status === "done" && file.url) {
+      console.log("handleUploadChange", file.url);
+      form.setFieldValue("url", file.url);
     }
-  );
+  };
 
-  const handleUploadRemove = useMemoizedFn(() => {
+  const handleUploadRemove = () => {
     form.setFieldValue("file", null);
-  });
+  };
 
   const getExtraData: UploadProps["data"] = useMemoizedFn(file => ({
     key: `${credentials?.dir}${file.name}`,
