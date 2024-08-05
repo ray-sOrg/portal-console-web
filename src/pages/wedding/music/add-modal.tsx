@@ -83,10 +83,10 @@ function ModalAdd() {
   };
 
   const getExtraData: UploadProps["data"] = file => ({
-    key: `${OSSData?.dir}${file.name}`,
-    OSSAccessKeyId: OSSData?.accessId,
-    policy: OSSData?.policy,
-    Signature: OSSData?.signature
+    key: `${credentials?.dir}${file.name}`,
+    OSSAccessKeyId: credentials?.accessId,
+    policy: credentials?.policy,
+    Signature: credentials?.signature
   });
 
   const handleBeforeUpload: UploadProps["beforeUpload"] = async file => {
