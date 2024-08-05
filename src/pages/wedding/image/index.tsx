@@ -1,5 +1,13 @@
+import Toolbar from "./toolbar";
+import List from "./list";
+
 function Image() {
-  return <div>Image</div>;
+  return (
+    <div>
+      <Toolbar />
+      <List />
+    </div>
+  );
 }
 
 export default Image;

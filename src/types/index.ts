@@ -122,3 +122,24 @@ export interface ApiResponseWeddingMusic {
   data: WeddingMusic[];
   total: number;
 }
+
+export interface ApiRequestWeddingImageList {
+  pageNumber: number;
+  pageSize: number;
+  keyword?: string;
+}
+
+export interface WeddingImage {
+  id: string | number;
+  title: string;
+  description: string;
+  image_path: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface ApiResponseWeddingImage {
+  code: number;
+  message: string;
+  data: WeddingImage[];
+  total: number;
+}
