@@ -44,6 +44,7 @@ function ModalAdd() {
   const [form] = Form.useForm();
 
   const onFinish: FormProps<FieldType>["onFinish"] = useMemoizedFn(values => {
+    console.log("values", values);
     const params = pick(values, ["title", "artist", "url", "album"]);
     addWeddingMusic(params).subscribe({
       next: data => {
@@ -74,6 +75,7 @@ function ModalAdd() {
   const handleUploadChange: UploadProps["onChange"] = useMemoizedFn(
     ({ file }) => {
       if (file.status === "done" && file.url) {
+        console.log("handleUploadChange", file);
         form.setFieldValue("url", file.url);
       }
     }
