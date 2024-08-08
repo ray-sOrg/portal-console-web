@@ -158,3 +158,17 @@ export interface ApiResponseAddWeddingMusic {
     music_id: string;
   };
 }
+
+export interface ApiRequestAllOssImage {
+  pageNumber: number;
+  pageSize: number;
+  keyword?: string;
+}
+
+export interface OssImage {}
+export interface ApiResponseAllOssImage {
+  code: number;
+  message: string;
+  data: OssImage[];
+  total: number;
+}

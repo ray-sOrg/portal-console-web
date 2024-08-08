@@ -5,6 +5,8 @@
         "wireframe",
         "zustand",
         "ahooks",
-        "Popconfirm"
+        "Popconfirm",
+        "immer",
+        "tanstack"
     ]
 }

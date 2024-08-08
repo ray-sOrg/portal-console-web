@@ -2,6 +2,8 @@ import Cookies from "js-cookie";
 import every from "lodash-es/every";
 import isNil from "lodash-es/isNil";
 import isEmpty from "lodash-es/isEmpty";
+import { Observable } from "rxjs";
+
 // 获取 cookie
 export function getCookie(key: string): string | undefined {
   return Cookies.get(key);
@@ -46,3 +48,20 @@ export function areAllValuesNonEmpty<T extends Record<string, any>>(
     return true;
   });
 }
+
+export const observableToPromise = <T>(
+  observable: Observable<T>
+): Promise<T> => {
+  return new Promise<T>((resolve, reject) => {
+    const subscription = observable.subscribe({
+      next: data => {
+        resolve(data);
+        subscription.unsubscribe(); // Ensure to unsubscribe after first resolve
+      },
+      error: error => {
+        reject(error);
+        subscription.unsubscribe(); // Ensure to unsubscribe on error
+      }
+    });
+  });
+};

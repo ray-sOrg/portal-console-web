@@ -1,0 +1,8 @@
+.copyBtn {
+  margin-left: 8px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.5);
+  &:hover {
+    color: rgba(0, 0, 0, 0.8);
+  }
+}

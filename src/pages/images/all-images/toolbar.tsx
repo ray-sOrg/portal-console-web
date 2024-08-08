@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { Flex, Button, Input, Modal, Popconfirm } from "antd";
 import { FileSyncOutlined, SyncOutlined } from "@ant-design/icons";
 import { useMemoizedFn } from "ahooks";
@@ -6,7 +6,12 @@ import { syncOssImages, watchOssImagesProgress } from "@/api";
 
 const { Search } = Input;
 
-function ImageToolbar() {
+interface Props {
+  refetch: () => void;
+}
+
+function ImageToolbar(props: Props) {
+  const { refetch } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [taskId, setTaskId] = useState<string | null>(null);
   const [subscription, setSubscription] = useState<any>(null);
@@ -79,10 +84,7 @@ function ImageToolbar() {
       </Modal>
       <Flex
         style={{
-          padding: 20,
-          marginBottom: "20px",
-          backgroundColor: "#fff",
-          borderRadius: "4px"
+          marginBottom: "20px"
         }}
         gap="middle"
         justify="space-between"
@@ -92,8 +94,10 @@ function ImageToolbar() {
             type="primary"
             icon={<SyncOutlined />}
             style={{ marginRight: 12 }}
-            onClick={() => {}}
+            onClick={refetch}
           />
+        </div>
+        <div>
           <Popconfirm
             title="确认"
             description="确定同步OSS？"
@@ -106,14 +110,12 @@ function ImageToolbar() {
               同步OSS
             </Button>
           </Popconfirm>
-        </div>
-        <div>
           <Search
             placeholder=""
             allowClear
             defaultValue={""}
             onSearch={() => {}}
-            style={{ width: 200 }}
+            style={{ width: 200, marginLeft: 8 }}
           />
         </div>
       </Flex>
@@ -121,4 +123,4 @@ function ImageToolbar() {
   );
 }
 
-export default ImageToolbar;
+export default memo(ImageToolbar);

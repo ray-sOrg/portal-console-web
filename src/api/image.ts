@@ -1,6 +1,12 @@
 import { Observable } from "rxjs";
 import request from "@/utils/http";
-import { ApiResponseSyncImage, ApiResponseSyncImageProgress } from "@/types";
+import { observableToPromise } from "@/utils";
+import {
+  ApiResponseSyncImage,
+  ApiResponseSyncImageProgress,
+  ApiRequestAllOssImage,
+  ApiResponseAllOssImage
+} from "@/types";
 
 // 同步oss的图片到数据库
 export function syncOssImages(): Observable<ApiResponseSyncImage> {
@@ -15,3 +21,16 @@ export function watchOssImagesProgress(
   const url = `/api/image/task_status/${taskId}`;
   return request<null, ApiResponseSyncImageProgress>(url, "GET");
 }
+
+// 查询所有的图片
+export function getAllOssImage(
+  params: ApiRequestAllOssImage
+): Observable<ApiResponseAllOssImage> {
+  const url = `/api/oss/images/list?${new URLSearchParams(
+    params as any
+  ).toString()}`;
+  return request<ApiRequestAllOssImage, ApiResponseAllOssImage>(url, "GET");
+}
+
+export const getAllOssImagePromise = async (param: ApiRequestAllOssImage) =>
+  await observableToPromise(getAllOssImage(param));
