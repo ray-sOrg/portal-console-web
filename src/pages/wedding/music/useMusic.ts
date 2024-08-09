@@ -1,11 +1,19 @@
 import { Subscription } from "rxjs";
 import { useMemoizedFn } from "ahooks";
-import { getWeddingMusic } from "@/api";
+import { getWeddingMusic, get_oss_credentials } from "@/api";
 import { notification } from "antd";
 import useMusicListStore from "./userMusicContext";
 
 const useMusicList = () => {
-  const { page, keyword, setLoading } = useMusicListStore();
+  const { page, keyword, setLoading, setCredentials } = useMusicListStore();
+
+  const initOssCredentials = useMemoizedFn(() => {
+    try {
+      get_oss_credentials("music").subscribe(res => {
+        setCredentials(res);
+      });
+    } catch (error) {}
+  });
 
   const fetch = useMemoizedFn(() => {
     setLoading(true);
@@ -58,7 +66,7 @@ const useMusicList = () => {
   // });
   // });
 
-  return { fetch };
+  return { fetch, initOssCredentials };
 };
 
 export default useMusicList;

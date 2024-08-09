@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useState } from "react";
 import { Spin } from "antd";
 import { useMemoizedFn, useMount } from "ahooks";
 import { Navigate } from "react-router-dom";
-import { getLoginUserInfo, get_oss_credentials } from "@/api";
+import { getLoginUserInfo } from "@/api";
 import useGlobalStore from "@/store";
 
 const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
@@ -10,7 +10,6 @@ const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const setUser = useGlobalStore(state => state.setUser);
-  const setCredentials = useGlobalStore(state => state.setCredentials);
 
   const checkAuthentication = useMemoizedFn(() => {
     try {
@@ -19,11 +18,6 @@ const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
           if (res.code === 200 && res.data.uuid) {
             setIsAuthenticated(true);
             setUser(res.data);
-            try {
-              get_oss_credentials().subscribe(res => {
-                setCredentials(res);
-              });
-            } catch (error) {}
           } else {
             setIsAuthenticated(false);
           }

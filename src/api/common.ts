@@ -1,8 +1,10 @@
 import { Observable } from "rxjs";
 import request from "@/utils/http";
 
-// 测试flask的env
-export function get_oss_credentials(): Observable<any> {
-  const url = "/api/oss/credentials";
+export type CredentialsType = "music" | "image";
+
+// get credentials
+export function get_oss_credentials(type: CredentialsType): Observable<any> {
+  const url = `/api/oss/credentials?type=${type}`;
   return request<null, any>(url, "GET");
 }

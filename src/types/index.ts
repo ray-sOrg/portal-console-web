@@ -159,6 +159,20 @@ export interface ApiResponseAddWeddingMusic {
   };
 }
 
+export interface ApiRequestAddWeddingImage {
+  title: string;
+  description: string;
+  url: string;
+}
+
+export interface ApiResponseAddWeddingImage {
+  code: number;
+  message: string;
+  data: {
+    image_id: string;
+  };
+}
+
 export interface ApiRequestAllOssImage {
   pageNumber: number;
   pageSize: number;

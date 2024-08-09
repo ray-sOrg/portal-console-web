@@ -1,13 +1,20 @@
 import { Flex, Button, Input } from "antd";
+import { useMemoizedFn } from "ahooks";
 import { FileSyncOutlined, SyncOutlined } from "@ant-design/icons";
 import useImage from "./useImage";
+import userImageStore from "./userImageContext";
 
 const { Search } = Input;
 
 function MusicToolbar() {
   const { fetch } = useImage();
+  const { setIsModalOpen } = userImageStore();
 
-  const handleFetch = () => fetch();
+  const handleOpenAddModal = useMemoizedFn(() => {
+    setIsModalOpen(true);
+  });
+  const handleFetch = useMemoizedFn(() => fetch());
+
   return (
     <>
       <Flex
@@ -25,7 +32,11 @@ function MusicToolbar() {
             style={{ marginRight: 12 }}
             onClick={handleFetch}
           />
-          <Button type="primary" icon={<FileSyncOutlined />}>
+          <Button
+            type="primary"
+            icon={<FileSyncOutlined />}
+            onClick={handleOpenAddModal}
+          >
             新增
           </Button>
         </div>

@@ -11,33 +11,31 @@ import {
 import { InboxOutlined } from "@ant-design/icons";
 import { useMemoizedFn, useUpdateEffect } from "ahooks";
 import pick from "lodash-es/pick";
-import { addWeddingMusic } from "@/api";
-import userMusicStore from "./userMusicContext";
-import useMusic from "./useMusic";
+import { addWeddingImage } from "@/api";
+import userImageStore from "./userImageContext";
+import useImage from "./useImage";
 import type { UploadProps } from "antd";
 
 const { Dragger } = Upload;
 
 type FieldType = {
   title: string;
-  artist: string;
+  description: string;
   url: string;
   file?: any;
-  album?: string;
 };
 
 const initialValues = {
   title: "",
-  artist: "",
+  description: "",
   file: null,
-  url: "",
-  album: ""
+  url: ""
 };
 
 function ModalAdd() {
-  const { isModalOpen, setIsModalOpen, credentials } = userMusicStore();
+  const { isModalOpen, setIsModalOpen, credentials } = userImageStore();
 
-  const { fetch, initOssCredentials } = useMusic();
+  const { fetch, initOssCredentials } = useImage();
 
   useUpdateEffect(() => {
     if (isModalOpen && !credentials) {
@@ -50,8 +48,8 @@ function ModalAdd() {
   const onFinish: FormProps<FieldType>["onFinish"] = values => {
     const url = values.file?.file?.url;
     if (url) {
-      const params = pick(values, ["title", "artist", "album"]);
-      addWeddingMusic({ ...params, url }).subscribe({
+      const params = pick(values, ["title", "description"]);
+      addWeddingImage({ ...params, url }).subscribe({
         next: data => {
           if (data.code === 200) {
             notification.open({
@@ -118,7 +116,7 @@ function ModalAdd() {
 
   return (
     <Modal
-      title="添加音乐"
+      title="添加展示图片"
       open={isModalOpen}
       footer={null}
       onCancel={handleCancel}
@@ -136,7 +134,7 @@ function ModalAdd() {
         scrollToFirstError
       >
         <Form.Item<FieldType>
-          label="歌名"
+          label="标题"
           name="title"
           rules={[
             { required: true, message: "Please input sing name!" },
@@ -147,17 +145,9 @@ function ModalAdd() {
         </Form.Item>
 
         <Form.Item<FieldType>
-          name="artist"
-          label="歌手"
+          name="description"
+          label="描述"
           rules={[{ required: true, message: "Please input singer name!" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item<FieldType>
-          label="专辑"
-          name="album"
-          rules={[{ required: false }]}
         >
           <Input />
         </Form.Item>
