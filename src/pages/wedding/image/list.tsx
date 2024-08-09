@@ -64,7 +64,7 @@ function List() {
           onClick={() =>
             setModalProps(draft => {
               draft.visible = true;
-              draft.imageUrl = `${CDN_CONFIG?.url}/${record.path}`;
+              draft.imageUrl = `${CDN_CONFIG?.url}/${record.image_path}`;
             })
           }
         >
