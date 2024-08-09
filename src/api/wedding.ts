@@ -25,7 +25,7 @@ export function addWeddingMusic(
 export function addWeddingImage(
   params: ApiRequestAddWeddingImage
 ): Observable<ApiResponseAddWeddingImage> {
-  const url = "/api/wedding/music/add";
+  const url = "/api/wedding/photo/wall/add";
   return request<ApiRequestAddWeddingImage, ApiResponseAddWeddingImage>(
     url,
     "POST",

@@ -46,10 +46,10 @@ function ModalAdd() {
   const [form] = Form.useForm<FieldType>();
 
   const onFinish: FormProps<FieldType>["onFinish"] = values => {
-    const url = values.file?.file?.url;
-    if (url) {
+    const image_path = values.file?.file?.url;
+    if (image_path) {
       const params = pick(values, ["title", "description"]);
-      addWeddingImage({ ...params, url }).subscribe({
+      addWeddingImage({ ...params, image_path }).subscribe({
         next: data => {
           if (data.code === 200) {
             notification.open({

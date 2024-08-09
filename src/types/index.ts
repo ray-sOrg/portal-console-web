@@ -162,7 +162,7 @@ export interface ApiResponseAddWeddingMusic {
 export interface ApiRequestAddWeddingImage {
   title: string;
   description: string;
-  url: string;
+  image_path: string;
 }
 
 export interface ApiResponseAddWeddingImage {
