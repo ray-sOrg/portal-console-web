@@ -6,7 +6,8 @@ import {
   Button,
   Flex,
   notification,
-  Upload
+  Upload,
+  InputNumber
 } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import { useMemoizedFn, useUpdateEffect } from "ahooks";
@@ -22,6 +23,7 @@ type FieldType = {
   title: string;
   description: string;
   url: string;
+  order?: number;
   file?: any;
 };
 
@@ -46,10 +48,10 @@ function ModalAdd() {
   const [form] = Form.useForm<FieldType>();
 
   const onFinish: FormProps<FieldType>["onFinish"] = values => {
-    const image_path = values.file?.file?.url;
-    if (image_path) {
-      const params = pick(values, ["title", "description"]);
-      addWeddingImage({ ...params, image_path }).subscribe({
+    const src = values.file?.file?.url;
+    if (src) {
+      const params = pick(values, ["title", "description", "order"]);
+      addWeddingImage({ ...params, src }).subscribe({
         next: data => {
           if (data.code === 200) {
             notification.open({
@@ -144,12 +146,12 @@ function ModalAdd() {
           <Input />
         </Form.Item>
 
-        <Form.Item<FieldType>
-          name="description"
-          label="描述"
-          rules={[{ required: true, message: "Please input singer name!" }]}
-        >
+        <Form.Item<FieldType> name="description" label="描述">
           <Input />
+        </Form.Item>
+
+        <Form.Item<FieldType> name="order" label="序号">
+          <InputNumber />
         </Form.Item>
 
         <Form.Item<FieldType>

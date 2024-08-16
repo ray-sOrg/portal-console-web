@@ -47,9 +47,14 @@ function List() {
       key: "description"
     },
     {
+      title: "序号",
+      dataIndex: "order",
+      key: "order"
+    },
+    {
       title: "图片地址",
-      dataIndex: "image_path",
-      key: "image_path",
+      dataIndex: "src",
+      key: "src",
       render: _val => {
         return `${CDN_CONFIG?.url}/${_val}`;
       }
@@ -64,7 +69,7 @@ function List() {
           onClick={() =>
             setModalProps(draft => {
               draft.visible = true;
-              draft.imageUrl = `${CDN_CONFIG?.url}/${record.image_path}`;
+              draft.imageUrl = `${CDN_CONFIG?.url}/${record.src}`;
             })
           }
         >
