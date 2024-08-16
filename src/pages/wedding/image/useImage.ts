@@ -1,11 +1,15 @@
 import { Subscription } from "rxjs";
 import { useMemoizedFn } from "ahooks";
-import { getWeddingImage, get_oss_credentials } from "@/api";
+import {
+  getWeddingImage,
+  get_oss_credentials,
+  deleteWeddingImage
+} from "@/api";
 import { notification } from "antd";
 import useWeddingImageListStore from "./userImageContext";
 
-const useMusicList = () => {
-  const { page, keyword, setLoading, setCredentials } =
+const useImageList = () => {
+  const { page, keyword, setLoading, setDeleteLoading, setCredentials } =
     useWeddingImageListStore();
 
   const initOssCredentials = useMemoizedFn(() => {
@@ -50,24 +54,27 @@ const useMusicList = () => {
     return subscription; // 返回 subscription
   });
 
-  // const deleteUserFn = useMemoizedFn((uuid: string) => {
-  // console.log("deleteUserFn", uuid);
-  // deleteUser({ uuid }).subscribe({
-  //   next: data => {
-  //     if (data.code === 200) {
-  //       fetch();
-  //     }
-  //   },
-  //   error: error => {
-  //     notification.open({
-  //       type: "error",
-  //       message: error?.message
-  //     });
-  //   }
-  // });
-  // });
+  const deleteImageFn = useMemoizedFn((id: string | number) => {
+    setDeleteLoading(true);
+    deleteWeddingImage({ id }).subscribe({
+      next: data => {
+        if (data.code === 200) {
+          fetch();
+        }
+      },
+      error: error => {
+        notification.open({
+          type: "error",
+          message: error?.message
+        });
+      },
+      complete: () => {
+        setDeleteLoading(false);
+      }
+    });
+  });
 
-  return { fetch, initOssCredentials };
+  return { fetch, initOssCredentials, deleteImageFn };
 };
 
-export default useMusicList;
+export default useImageList;

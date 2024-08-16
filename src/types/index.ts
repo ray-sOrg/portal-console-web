@@ -128,12 +128,16 @@ export interface ApiRequestWeddingImageList {
   pageSize: number;
   keyword?: string;
 }
+export interface ApiRequestDeleteWeddingImage {
+  id: string | number;
+}
 
 export interface WeddingImage {
   id: string | number;
   title: string;
   description: string;
-  image_path: string;
+  order: number;
+  src: string;
   created_at: string;
   updated_at: string;
 }
@@ -142,6 +146,12 @@ export interface ApiResponseWeddingImage {
   message: string;
   data: WeddingImage[];
   total: number;
+}
+
+export interface ApiResponseDeleteWeddingMusic {
+  code: number;
+  message: string;
+  data: any;
 }
 
 export interface ApiRequestAddWeddingMusic {

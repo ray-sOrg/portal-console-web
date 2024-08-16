@@ -1,7 +1,7 @@
 import { useDebounceEffect } from "ahooks";
 import { Subscription } from "rxjs";
 import { useImmer } from "use-immer";
-import { Table, Button } from "antd";
+import { Table, Button, Popconfirm } from "antd";
 import { CDN_CONFIG } from "@/config/index";
 import userImageStore from "./userImageContext";
 import useImage from "./useImage";
@@ -15,7 +15,7 @@ function List() {
     imageUrl: ""
   });
 
-  const { fetch } = useImage();
+  const { fetch, deleteImageFn } = useImage();
 
   useDebounceEffect(
     () => {
@@ -63,18 +63,31 @@ function List() {
       title: "操作",
       dataIndex: "action",
       key: "action",
-      render: (_val: string, record: any) => (
-        <Button
-          type="text"
-          onClick={() =>
-            setModalProps(draft => {
-              draft.visible = true;
-              draft.imageUrl = `${CDN_CONFIG?.url}/${record.src}`;
-            })
-          }
-        >
-          预览
-        </Button>
+      render: (_val: string, record) => (
+        <>
+          <Button
+            type="text"
+            onClick={() =>
+              setModalProps(draft => {
+                draft.visible = true;
+                draft.imageUrl = `${CDN_CONFIG?.url}/${record.src}`;
+              })
+            }
+          >
+            预览
+          </Button>
+
+          <Popconfirm
+            title="确认删除这条数据吗？"
+            onConfirm={() => deleteImageFn(record.id)}
+            okText="确认"
+            cancelText="取消"
+          >
+            <Button danger type="text">
+              删除
+            </Button>
+          </Popconfirm>
+        </>
       )
     }
   ];

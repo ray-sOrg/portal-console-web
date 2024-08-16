@@ -12,6 +12,7 @@ interface WeddingImageListStore {
   credentials: null | Credentials;
   isModalOpen: boolean;
   loading: boolean;
+  deleteLoading: boolean;
   page: Page;
   keyword: string;
   list: WeddingImage[];
@@ -19,6 +20,7 @@ interface WeddingImageListStore {
   setCredentials: (credentials: Credentials) => void;
   setIsModalOpen: (isModalOpen: boolean) => void;
   setLoading: (loading: boolean) => void;
+  setDeleteLoading: (loading: boolean) => void;
   setPage: (page: Page) => void;
   setKeyword: (keyword: string) => void;
 }
@@ -27,6 +29,7 @@ const useWeddingImageListStore = create<WeddingImageListStore>(set => ({
   credentials: null,
   isModalOpen: false,
   loading: true,
+  deleteLoading: false,
   page: { pageNumber: 1, pageSize: 20 },
   keyword: "",
   list: [],
@@ -34,6 +37,7 @@ const useWeddingImageListStore = create<WeddingImageListStore>(set => ({
   setCredentials: (credentials: Credentials) => set({ credentials }),
   setIsModalOpen: isModalOpen => set({ isModalOpen }),
   setLoading: loading => set({ loading }),
+  setDeleteLoading: deleteLoading => set({ deleteLoading }),
   setPage: page => set(state => ({ ...state.page, page })),
   setKeyword: keyword => set({ keyword })
 }));
