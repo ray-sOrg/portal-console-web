@@ -32,11 +32,6 @@ function List() {
 
   const columns: TableProps<(typeof list)[number]>["columns"] = [
     {
-      title: "id",
-      dataIndex: "id",
-      key: "id"
-    },
-    {
       title: "标题",
       dataIndex: "title",
       key: "title"
