@@ -1,3 +1,4 @@
+import { Switch } from "antd";
 import { useDebounceEffect } from "ahooks";
 import { Subscription } from "rxjs";
 import { useImmer } from "use-immer";
@@ -15,7 +16,7 @@ function List() {
     imageUrl: ""
   });
 
-  const { fetch, deleteImageFn } = useImage();
+  const { fetch, deleteImageFn, changeShowImageFn } = useImage();
 
   useDebounceEffect(
     () => {
@@ -45,6 +46,21 @@ function List() {
       title: "序号",
       dataIndex: "order",
       key: "order"
+    },
+    {
+      title: "是否显示",
+      dataIndex: "is_show",
+      key: "is_show",
+      render: (_val: boolean, record) => (
+        <Switch
+          checkedChildren="显示"
+          unCheckedChildren="隐藏"
+          checked={_val}
+          onClick={() => {
+            changeShowImageFn(record.id, !_val);
+          }}
+        />
+      )
     },
     {
       title: "图片地址",

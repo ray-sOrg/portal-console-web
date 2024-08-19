@@ -10,7 +10,9 @@ import {
   ApiRequestAddWeddingImage,
   ApiResponseAddWeddingImage,
   ApiRequestDeleteWeddingImage,
-  ApiResponseDeleteWeddingMusic
+  ApiResponseDeleteWeddingMusic,
+  ApiRequestEditWeddingImage,
+  ApiResponseEditWeddingImage
 } from "@/types";
 
 export function addWeddingMusic(
@@ -58,6 +60,17 @@ export function deleteWeddingImage(
 ): Observable<ApiResponseDeleteWeddingMusic> {
   const url = "/api/wedding/photo/wall/delete";
   return request<ApiRequestDeleteWeddingImage, ApiResponseDeleteWeddingMusic>(
+    url,
+    "POST",
+    params
+  );
+}
+
+export function editWeddingImage(
+  params: ApiRequestEditWeddingImage
+): Observable<ApiResponseEditWeddingImage> {
+  const url = "/api/wedding/photo/wall/edit";
+  return request<ApiRequestEditWeddingImage, ApiResponseEditWeddingImage>(
     url,
     "POST",
     params

@@ -3,7 +3,8 @@ import { useMemoizedFn } from "ahooks";
 import {
   getWeddingImage,
   get_oss_credentials,
-  deleteWeddingImage
+  deleteWeddingImage,
+  editWeddingImage
 } from "@/api";
 import { notification } from "antd";
 import useWeddingImageListStore from "./userImageContext";
@@ -74,7 +75,29 @@ const useImageList = () => {
     });
   });
 
-  return { fetch, initOssCredentials, deleteImageFn };
+  const changeShowImageFn = useMemoizedFn(
+    (id: string | number, isShow: boolean) => {
+      setLoading(true);
+      editWeddingImage({ id, isShow }).subscribe({
+        next: data => {
+          if (data.code === 200) {
+            fetch();
+          }
+        },
+        error: error => {
+          notification.open({
+            type: "error",
+            message: error?.message
+          });
+        },
+        complete: () => {
+          setLoading(false);
+        }
+      });
+    }
+  );
+
+  return { fetch, initOssCredentials, deleteImageFn, changeShowImageFn };
 };
 
 export default useImageList;

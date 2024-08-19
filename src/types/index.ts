@@ -131,6 +131,14 @@ export interface ApiRequestWeddingImageList {
 export interface ApiRequestDeleteWeddingImage {
   id: string | number;
 }
+export interface ApiRequestEditWeddingImage {
+  id: string | number;
+  title?: string;
+  description?: string;
+  order?: number;
+  src?: string;
+  isShow?: boolean;
+}
 
 export interface WeddingImage {
   id: string | number;
@@ -149,6 +157,12 @@ export interface ApiResponseWeddingImage {
 }
 
 export interface ApiResponseDeleteWeddingMusic {
+  code: number;
+  message: string;
+  data: any;
+}
+
+export interface ApiResponseEditWeddingImage {
   code: number;
   message: string;
   data: any;
