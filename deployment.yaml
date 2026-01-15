@@ -1,0 +1,104 @@
+# ========================================
+# 🔧 项目配置说明（复用到其他项目时需要修改）
+# ========================================
+# 需要修改的地方：
+# 1. 所有 "portal-console-web" 改为你的项目名称
+# 2. secret name: cos-secret-portal-console-web 改为 cos-secret-{项目名}
+# 3. Ingress host: console.ray321.cn 改为你的域名
+# 4. Ingress secretName: portal-console-web-tls 改为 {项目名}-tls
+# 5. containerPort 和 targetPort: 80 (nginx 默认端口)
+# 6. 健康检查路径: / 改为你的项目健康检查路径
+# ========================================
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portal-console-web-deployment
+  labels:
+    app: portal-console-web
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: portal-console-web
+  template:
+    metadata:
+      labels:
+        app: portal-console-web
+    spec:
+      imagePullSecrets:
+        - name: tencent-tcr-secret
+      containers:
+        - name: portal-console-web
+          image: __IMAGE_NAME__:__IMAGE_TAG__
+          ports:
+            - containerPort: 80
+          env:
+            - name: COS_SECRET_ID
+              valueFrom:
+                secretKeyRef:
+                  name: cos-secret-portal-console-web
+                  key: COS_SECRET_ID
+            - name: COS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cos-secret-portal-console-web
+                  key: COS_SECRET_KEY
+            - name: COS_REGION
+              value: "ap-chengdu"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: portal-console-web-service
+spec:
+  selector:
+    app: portal-console-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: portal-console-web-ingress
+  namespace: default
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  tls:
+    - hosts:
+        - console.tt829.cn
+      secretName: portal-console-web-tls
+  rules:
+    - host: console.tt829.cn
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: portal-console-web-service
+                port:
+                  number: 80
