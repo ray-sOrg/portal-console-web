@@ -2,7 +2,8 @@ import { Menu, MenuProps } from "antd";
 import {
   FileJpgOutlined,
   UserOutlined,
-  SketchOutlined
+  SketchOutlined,
+  CoffeeOutlined
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
@@ -24,6 +25,11 @@ const items: MenuItem[] = [
     key: "wedding",
     icon: <SketchOutlined />,
     label: "婚礼"
+  },
+  {
+    key: "chuan-dai",
+    icon: <CoffeeOutlined />,
+    label: "川傣"
   }
   // {
   //   key: "test",

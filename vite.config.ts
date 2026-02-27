@@ -19,15 +19,12 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      // "/api": {
-      //   target: "http://127.0.0.1:5000", // 你要代理到的目标地址
-      //   changeOrigin: true,
-      //   rewrite: path => path.replace(/^\/api/, "/") // 将 /api 重写为 /
-      // }
+      // 开发环境使用本地后端，生产环境使用远程
+      // 开发时运行: API_URL=http://127.0.0.1:5001 npm run dev
       "/api": {
-        target: "https://console.ray321.cn",
+        target: process.env.API_URL || "https://console.ray321.cn",
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, "/api")
+        rewrite: path => path.replace(/^\/api/, "")
       }
     }
   }
