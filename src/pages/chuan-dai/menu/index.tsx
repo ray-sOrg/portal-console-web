@@ -18,7 +18,7 @@ function MenuList() {
           message.error(res.message);
         }
       },
-      error: (err) => {
+      error: (_err) => {
         setLoading(false);
         message.error("获取菜品列表失败");
       }
