@@ -102,7 +102,7 @@ spec:
               service:
                 name: server-console-service
                 port:
-                  number: 5000
+                  number: 80
           - path: /
             pathType: Prefix
             backend:
