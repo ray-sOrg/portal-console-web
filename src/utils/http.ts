@@ -1,14 +1,20 @@
 import { Observable } from "rxjs";
 import { notification } from "antd";
 
+// API 基础 URL（生产环境用独立域名，开发环境用代理）
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+
 // 封装发送请求的方法
 function request<P = any, R = any>(
   url: string,
   method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
   body: P | null = null
 ): Observable<R> {
+  // 拼接完整 URL
+  const fullUrl = API_BASE_URL + url;
+  
   return new Observable(observer => {
-    fetch(url, {
+    fetch(fullUrl, {
       method,
       headers: {
         "Content-Type": "application/json"

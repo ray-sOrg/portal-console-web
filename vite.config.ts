@@ -19,12 +19,44 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      // 开发环境使用本地后端，生产环境使用远程
-      // 开发时运行: API_URL=http://127.0.0.1:5001 npm run dev
-      "/api": {
-        target: process.env.API_URL || "https://console.ray321.cn",
-        changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, "")
+      // 开发环境代理 API 请求到本地后端
+      // 所有以 / 开头的非静态文件请求都代理
+      // 运行: yarn dev (本地后端 http://127.0.0.1:5001)
+      "/login": {
+        target: "http://127.0.0.1:5001",
+        changeOrigin: true
+      },
+      "/logout": {
+        target: "http://127.0.0.1:5001",
+        changeOrigin: true
+      },
+      "/user": {
+        target: "http://127.0.0.1:5001",
+        changeOrigin: true
+      },
+      "/oss": {
+        target: "http://127.0.0.1:5001",
+        changeOrigin: true
+      },
+      "/image": {
+        target: "http://127.0.0.1:5001",
+        changeOrigin: true
+      },
+      "/wedding": {
+        target: "http://127.0.0.1:5001",
+        changeOrigin: true
+      },
+      "/chuan-dai": {
+        target: "http://127.0.0.1:5001",
+        changeOrigin: true
+      },
+      "/test": {
+        target: "http://127.0.0.1:5001",
+        changeOrigin: true
+      },
+      "/health": {
+        target: "http://127.0.0.1:5001",
+        changeOrigin: true
       }
     }
   }

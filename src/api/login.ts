@@ -9,12 +9,12 @@ import {
 
 // 登录
 export function login(data: ApiRequestLogin): Observable<ApiResponseLogin> {
-  const url = "/api/login";
+  const url = "/login";
   return request<ApiRequestLogin, ApiResponseLogin>(url, "POST", data);
 }
 
 // 登出
 export function loginOut(): Observable<ApiResponseLoginOut> {
-  const url = "/api/logout";
+  const url = "/logout";
   return request<null, ApiResponseLogin>(url, "POST");
 }

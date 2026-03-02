@@ -10,7 +10,7 @@ import {
 
 // 同步oss的图片到数据库
 export function syncOssImages(): Observable<ApiResponseSyncImage> {
-  const url = "/api/image/asyncOss";
+  const url = "/image/asyncOss";
   return request<null, ApiResponseSyncImage>(url, "GET");
 }
 
@@ -18,7 +18,7 @@ export function syncOssImages(): Observable<ApiResponseSyncImage> {
 export function watchOssImagesProgress(
   taskId: string
 ): Observable<ApiResponseSyncImageProgress> {
-  const url = `/api/image/task_status/${taskId}`;
+  const url = `/image/task_status/${taskId}`;
   return request<null, ApiResponseSyncImageProgress>(url, "GET");
 }
 
@@ -26,7 +26,7 @@ export function watchOssImagesProgress(
 export function getAllOssImage(
   params: ApiRequestAllOssImage
 ): Observable<ApiResponseAllOssImage> {
-  const url = `/api/oss/images/list?${new URLSearchParams(
+  const url = `/oss/images/list?${new URLSearchParams(
     params as any
   ).toString()}`;
   return request<ApiRequestAllOssImage, ApiResponseAllOssImage>(url, "GET");

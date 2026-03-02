@@ -11,6 +11,9 @@ RUN yarn install --frozen-lockfile
 # Copy source code
 COPY . .
 
+# Set API URL for production build
+ENV VITE_API_URL=https://api.tt829.cn
+
 # Build the project
 RUN yarn build
 
