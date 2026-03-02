@@ -96,6 +96,13 @@ spec:
     - host: console.tt829.cn
       http:
         paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: server-console-service
+                port:
+                  number: 5000
           - path: /
             pathType: Prefix
             backend:
