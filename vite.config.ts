@@ -19,42 +19,8 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      // 开发环境代理 API 请求到本地后端
-      // 所有以 / 开头的非静态文件请求都代理
-      // 运行: yarn dev (本地后端 http://127.0.0.1:5001)
-      "/login": {
-        target: "http://127.0.0.1:5001",
-        changeOrigin: true
-      },
-      "/logout": {
-        target: "http://127.0.0.1:5001",
-        changeOrigin: true
-      },
-      "/user": {
-        target: "http://127.0.0.1:5001",
-        changeOrigin: true
-      },
-      "/oss": {
-        target: "http://127.0.0.1:5001",
-        changeOrigin: true
-      },
-      "/image": {
-        target: "http://127.0.0.1:5001",
-        changeOrigin: true
-      },
-      "/wedding": {
-        target: "http://127.0.0.1:5001",
-        changeOrigin: true
-      },
-      "/chuan-dai": {
-        target: "http://127.0.0.1:5001",
-        changeOrigin: true
-      },
-      "/test": {
-        target: "http://127.0.0.1:5001",
-        changeOrigin: true
-      },
-      "/health": {
+      // 开发环境代理：所有 /api 请求代理到本地后端
+      "/api": {
         target: "http://127.0.0.1:5001",
         changeOrigin: true
       }

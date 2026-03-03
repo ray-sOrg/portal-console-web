@@ -12,7 +12,7 @@ import {
 
 // 获取用户登录信息的接口
 export function getLoginUserInfo(): Observable<ApiResponseLoginUserInfo> {
-  const url = "/user/login/info";
+  const url = "/api/user/login/info";
   return request<null, ApiResponseLoginUserInfo>(url, "GET");
 }
 
@@ -20,7 +20,7 @@ export function getLoginUserInfo(): Observable<ApiResponseLoginUserInfo> {
 export function getUserList(
   params: ApiRequestUserList
 ): Observable<ApiResponseUserList> {
-  const url = `/user/list?${new URLSearchParams(params as any).toString()}`;
+  const url = `/api/user/list?${new URLSearchParams(params as any).toString()}`;
   return request<ApiRequestUserList, ApiResponseUserList>(url, "GET");
 }
 
@@ -28,7 +28,7 @@ export function getUserList(
 export function addUser(
   data: ApiRequestAddUser
 ): Observable<ApiResponseAddUser> {
-  const url = "/user/add";
+  const url = "/api/user/add";
   return request<ApiRequestAddUser, ApiResponseAddUser>(url, "POST", data);
 }
 
@@ -36,7 +36,7 @@ export function addUser(
 export function deleteUser(
   data: ApiRequestDeleteUser
 ): Observable<ApiResponseDeleteUser> {
-  const url = `/user/delete`;
+  const url = `/api/user/delete`;
   return request<ApiRequestDeleteUser, ApiResponseDeleteUser>(
     url,
     "POST",

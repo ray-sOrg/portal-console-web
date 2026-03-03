@@ -3,12 +3,12 @@ import request from "@/utils/http";
 
 // 测试flask的env
 export function flask_env(): Observable<any> {
-  const url = "/test/flask_env";
+  const url = "/api/test/flask_env";
   return request<null, any>(url, "GET");
 }
 
 // 测试flask的celery
 export function celery(): Observable<any> {
-  const url = "/test/celery";
+  const url = "/api/test/celery";
   return request<null, any>(url, "GET");
 }

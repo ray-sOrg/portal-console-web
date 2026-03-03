@@ -18,7 +18,7 @@ import {
 export function addWeddingMusic(
   params: ApiRequestAddWeddingMusic
 ): Observable<ApiResponseAddWeddingMusic> {
-  const url = "/wedding/music/add";
+  const url = "/api/wedding/music/add";
   return request<ApiRequestAddWeddingMusic, ApiResponseAddWeddingMusic>(
     url,
     "POST",
@@ -29,7 +29,7 @@ export function addWeddingMusic(
 export function addWeddingImage(
   params: ApiRequestAddWeddingImage
 ): Observable<ApiResponseAddWeddingImage> {
-  const url = "/wedding/photo/wall/add";
+  const url = "/api/wedding/photo/wall/add";
   return request<ApiRequestAddWeddingImage, ApiResponseAddWeddingImage>(
     url,
     "POST",
@@ -40,7 +40,7 @@ export function addWeddingImage(
 export function getWeddingMusic(
   params: ApiRequestWeddingMusicList
 ): Observable<ApiResponseWeddingMusic> {
-  const url = `/wedding/music/list?${new URLSearchParams(
+  const url = `/api/wedding/music/list?${new URLSearchParams(
     params as any
   ).toString()}`;
   return request<null, ApiResponseWeddingMusic>(url, "GET");
@@ -49,7 +49,7 @@ export function getWeddingMusic(
 export function getWeddingImage(
   params: ApiRequestWeddingImageList
 ): Observable<ApiResponseWeddingImage> {
-  const url = `/wedding/photo/wall/list?${new URLSearchParams(
+  const url = `/api/wedding/photo/wall/list?${new URLSearchParams(
     params as any
   ).toString()}`;
   return request<null, ApiResponseWeddingImage>(url, "GET");
@@ -58,7 +58,7 @@ export function getWeddingImage(
 export function deleteWeddingImage(
   params: ApiRequestDeleteWeddingImage
 ): Observable<ApiResponseDeleteWeddingMusic> {
-  const url = "/wedding/photo/wall/delete";
+  const url = "/api/wedding/photo/wall/delete";
   return request<ApiRequestDeleteWeddingImage, ApiResponseDeleteWeddingMusic>(
     url,
     "POST",
@@ -69,7 +69,7 @@ export function deleteWeddingImage(
 export function editWeddingImage(
   params: ApiRequestEditWeddingImage
 ): Observable<ApiResponseEditWeddingImage> {
-  const url = "/wedding/photo/wall/edit";
+  const url = "/api/wedding/photo/wall/edit";
   return request<ApiRequestEditWeddingImage, ApiResponseEditWeddingImage>(
     url,
     "POST",
