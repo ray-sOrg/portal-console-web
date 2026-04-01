@@ -15,6 +15,10 @@ const queryClient = new QueryClient();
 
 const browserRouter = createBrowserRouter(router);
 
+// 版本信息
+console.log("%c🚀 portal-console-web v0.1.0", "color: #4CAF50; font-weight: bold; font-size: 14px;");
+console.log("%c   构建时间: " + new Date().toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" }), "color: #888;");
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ConfigProvider theme={theme}>
