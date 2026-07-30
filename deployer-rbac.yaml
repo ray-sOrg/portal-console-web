@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: portal-console-web-deployer
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: portal-console-web-deployer
+  namespace: default
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    resourceNames: ["portal-console-web-deployment"]
+    verbs: ["get", "watch", "patch", "update"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["list"]
+  - apiGroups: ["apps"]
+    resources: ["replicasets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["services"]
+    resourceNames: ["portal-console-web-service"]
+    verbs: ["get", "patch", "update"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    resourceNames: ["portal-console-web-ingress"]
+    verbs: ["get", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: portal-console-web-deployer
+  namespace: default
+subjects:
+  - kind: ServiceAccount
+    name: portal-console-web-deployer
+    namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: portal-console-web-deployer
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: portal-console-web-deployer-token
+  namespace: default
+  annotations:
+    kubernetes.io/service-account.name: portal-console-web-deployer
+type: kubernetes.io/service-account-token
