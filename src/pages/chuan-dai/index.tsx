@@ -1,6 +1,6 @@
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router";
 import UserList from "./users";
 import MenuList from "./menu";
 import PhotoList from "./photos";

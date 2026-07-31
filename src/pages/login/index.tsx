@@ -1,6 +1,6 @@
 import { Button, Form, Input, Flex, notification } from "antd";
 import { useMemoizedFn } from "ahooks";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { login } from "@/api";
 import type { FormProps } from "antd";
 

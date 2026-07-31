@@ -29,7 +29,7 @@ function ImageToolbar(props: Props) {
     syncOssImages().subscribe({
       next: res => {
         if (res.code === 200) {
-          let taskId = res.task_id;
+          const taskId = res.task_id;
           if (taskId) {
             setTaskId(taskId);
             setIsModalOpen(true);

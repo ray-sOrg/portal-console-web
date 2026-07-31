@@ -2,7 +2,7 @@ import { Avatar, Popconfirm } from "antd";
 import { useCreation, useMemoizedFn } from "ahooks";
 import useGlobalStore from "@/store";
 import { loginOut } from "@/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import styles from "./index.module.css";
 
 function Header() {

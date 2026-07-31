@@ -5,7 +5,7 @@ import {
   SketchOutlined,
   CoffeeOutlined
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 type MenuItem = Required<MenuProps>["items"][number];
 type MenuClickEventHandler = Required<MenuProps>["onClick"];

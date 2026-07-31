@@ -12,7 +12,9 @@ const useMusicList = () => {
       get_oss_credentials("music").subscribe(res => {
         setCredentials(res);
       });
-    } catch (error) {}
+    } catch {
+      return;
+    }
   });
 
   const fetch = useMemoizedFn(() => {

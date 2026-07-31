@@ -20,7 +20,7 @@ function List() {
 
   useDebounceEffect(
     () => {
-      let subscription: Subscription | null = fetch();
+      const subscription: Subscription | null = fetch();
       return () => {
         if (subscription) {
           subscription.unsubscribe();

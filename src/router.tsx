@@ -1,5 +1,4 @@
-import { RouteObject } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { RouteObject, Navigate } from "react-router";
 
 import ErrorPage from "./error-page";
 import Login from "./pages/login";

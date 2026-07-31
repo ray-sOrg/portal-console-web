@@ -18,7 +18,9 @@ const useImageList = () => {
       get_oss_credentials("image").subscribe(res => {
         setCredentials(res);
       });
-    } catch (error) {}
+    } catch {
+      return;
+    }
   });
 
   const fetch = useMemoizedFn(() => {
