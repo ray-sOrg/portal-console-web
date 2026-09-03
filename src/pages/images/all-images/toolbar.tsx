@@ -83,21 +83,24 @@ function ImageToolbar(props: Props) {
         </p>
       </Modal>
       <Flex
+        className="workspace-toolbar workspace-toolbar--plain"
         style={{
           marginBottom: "20px"
         }}
         gap="middle"
         justify="space-between"
+        wrap
       >
-        <div>
+        <div className="workspace-toolbar__actions">
           <Button
             type="primary"
             icon={<SyncOutlined />}
-            style={{ marginRight: 12 }}
             onClick={refetch}
-          />
+          >
+            刷新
+          </Button>
         </div>
-        <div>
+        <div className="workspace-toolbar__search">
           <Popconfirm
             title="确认"
             description="确定同步OSS？"
@@ -111,11 +114,10 @@ function ImageToolbar(props: Props) {
             </Button>
           </Popconfirm>
           <Search
-            placeholder=""
+            placeholder="搜索图片"
             allowClear
             defaultValue={""}
             onSearch={() => {}}
-            style={{ width: 200, marginLeft: 8 }}
           />
         </div>
       </Flex>

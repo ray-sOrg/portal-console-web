@@ -1,36 +1,43 @@
+import { useState } from "react";
 import { Layout } from "antd";
 import { Outlet } from "react-router";
 import HeaderComponent from "@/component/header";
 import SiderComponent from "@/component/sider";
-import FooterComponent from "@/component/footer";
 import ProtectedRouter from "@/component/protected-route";
+import styles from "./index.module.css";
 
-const { Header, Sider, Content, Footer } = Layout;
+const { Header, Sider, Content } = Layout;
 
 function HomeComponent() {
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Header>
-        <HeaderComponent />
+    <Layout className={styles.appShell}>
+      <Header className={styles.topBar}>
+        <HeaderComponent
+          collapsed={collapsed}
+          onToggleNavigation={() => setCollapsed(value => !value)}
+        />
       </Header>
-      <Layout>
-        <Sider width={200}>
-          <SiderComponent />
+      <Layout className={styles.body}>
+        <Sider
+          className={styles.sidebar}
+          width={232}
+          collapsedWidth={0}
+          collapsed={collapsed}
+          collapsible
+          trigger={null}
+          breakpoint="lg"
+          onBreakpoint={setCollapsed}
+        >
+          <SiderComponent collapsed={collapsed} />
         </Sider>
-        <Content style={{ padding: "12px" }}>
-          <div
-            style={{
-              height: "100%",
-              borderRadius: "4px"
-            }}
-          >
+        <Content className={styles.content}>
+          <main className={styles.workspace}>
             <Outlet />
-          </div>
+          </main>
         </Content>
       </Layout>
-      <Footer>
-        <FooterComponent />
-      </Footer>
     </Layout>
   );
 }

@@ -15,22 +15,22 @@ function Toolbar() {
 
   return (
     <Flex
+      className="workspace-toolbar"
       style={{
-        padding: 20,
-        marginBottom: "20px",
-        backgroundColor: "#fff",
-        borderRadius: "4px"
+        marginBottom: "20px"
       }}
       gap="middle"
       justify="space-between"
+      wrap
     >
-      <div>
+      <div className="workspace-toolbar__actions">
         <Button
           type="primary"
           icon={<SyncOutlined />}
-          style={{ marginRight: 12 }}
           onClick={fetch}
-        />
+        >
+          刷新
+        </Button>
         <Button
           type="primary"
           icon={<PlusOutlined />}
@@ -39,13 +39,12 @@ function Toolbar() {
           添加用户
         </Button>
       </div>
-      <div>
+      <div className="workspace-toolbar__search">
         <Search
-          placeholder=""
+          placeholder="搜索用户"
           allowClear
           defaultValue={keyword}
           onSearch={setKeyword}
-          style={{ width: 200 }}
         />
       </div>
     </Flex>

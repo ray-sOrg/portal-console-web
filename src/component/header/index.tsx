@@ -1,16 +1,40 @@
-import { Avatar, Popconfirm } from "antd";
+import { Avatar, Button, Popconfirm, Tooltip } from "antd";
+import {
+  LogoutOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined
+} from "@ant-design/icons";
 import { useCreation, useMemoizedFn } from "ahooks";
 import useGlobalStore from "@/store";
 import { loginOut } from "@/api";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import styles from "./index.module.css";
 
-function Header() {
+interface HeaderProps {
+  collapsed: boolean;
+  onToggleNavigation: () => void;
+}
+
+const routeTitles: Record<string, { eyebrow: string; title: string }> = {
+  user: { eyebrow: "Workspace", title: "用户管理" },
+  image: { eyebrow: "Media library", title: "图片管理" },
+  wedding: { eyebrow: "Wedding studio", title: "婚礼内容" },
+  "chuan-dai": { eyebrow: "Chuan Dai", title: "川傣管理" }
+};
+
+function Header({ collapsed, onToggleNavigation }: HeaderProps) {
   const user = useGlobalStore(state => state.user);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const rootRoute = location.pathname.split("/").filter(Boolean)[0] ?? "user";
+  const pageMeta = routeTitles[rootRoute] ?? {
+    eyebrow: "Ray Console",
+    title: "管理中心"
+  };
 
   const firstChart = useCreation(
-    () => (user ? user?.username?.[0].toUpperCase() : "空"),
+    () => (user?.username?.[0] ? user.username[0].toUpperCase() : "R"),
     [user]
   );
 
@@ -28,11 +52,43 @@ function Header() {
 
   return (
     <div className={styles.header}>
-      <span className={styles.title} onClick={handleHome}>
-        Ray
-      </span>
+      <div className={styles.leading}>
+        <button
+          className={styles.brand}
+          type="button"
+          onClick={handleHome}
+          aria-label="返回 Ray Console 首页"
+        >
+          <span className={styles.brandMark} aria-hidden="true">R</span>
+          <span className={styles.brandName}>Ray Console</span>
+        </button>
+
+        <Tooltip title={collapsed ? "展开导航" : "收起导航"}>
+          <Button
+            className={styles.menuButton}
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={onToggleNavigation}
+            aria-label={collapsed ? "展开导航" : "收起导航"}
+          />
+        </Tooltip>
+
+        <div className={styles.pageIdentity}>
+          <span>{pageMeta.eyebrow}</span>
+          <strong>{pageMeta.title}</strong>
+        </div>
+      </div>
+
       <div className={styles.info}>
-        <Avatar shape="square" size={42}>
+        <div className={styles.status}>
+          <i aria-hidden="true" />
+          <span>系统在线</span>
+        </div>
+        <div className={styles.userMeta}>
+          <strong>{user?.username ?? "Ray 用户"}</strong>
+          <span>{user?.role?.replaceAll("_", " ") ?? "member"}</span>
+        </div>
+        <Avatar className={styles.avatar} size={38}>
           {firstChart}
         </Avatar>
         <Popconfirm
@@ -41,7 +97,14 @@ function Header() {
           cancelText="否"
           onConfirm={handleLoginOut}
         >
-          <span className={styles.loginOut}>退出</span>
+          <Button
+            className={styles.logoutButton}
+            type="text"
+            icon={<LogoutOutlined />}
+            aria-label="退出登录"
+          >
+            退出
+          </Button>
         </Popconfirm>
       </div>
     </div>

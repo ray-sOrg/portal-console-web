@@ -5,7 +5,8 @@ import {
   SketchOutlined,
   CoffeeOutlined
 } from "@ant-design/icons";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import styles from "./index.module.css";
 
 type MenuItem = Required<MenuProps>["items"][number];
 type MenuClickEventHandler = Required<MenuProps>["onClick"];
@@ -48,25 +49,42 @@ const getActiveRoute = (pathname: string, items: MenuItem[]): string[] => {
   return activeKeys;
 };
 
-const currentPathname = window.location.pathname;
-const activeRoutes = getActiveRoute(currentPathname, items);
+interface SiderProps {
+  collapsed: boolean;
+}
 
-function Sider() {
+function Sider({ collapsed }: SiderProps) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const activeRoutes = getActiveRoute(location.pathname, items);
 
   const handleClick: MenuClickEventHandler = info => {
     if (!info?.key) return;
-    navigate(info?.key);
+    navigate(`/${info.key}`);
   };
 
   return (
-    <Menu
-      style={{ height: "100%" }}
-      mode="inline"
-      items={items}
-      onClick={handleClick}
-      defaultSelectedKeys={activeRoutes}
-    />
+    <nav className={styles.navigation} aria-label="主导航">
+      <div className={styles.sectionLabel} data-collapsed={collapsed}>
+        工作空间
+      </div>
+      <Menu
+        className={styles.menu}
+        mode="inline"
+        theme="dark"
+        inlineCollapsed={collapsed}
+        items={items}
+        onClick={handleClick}
+        selectedKeys={activeRoutes}
+      />
+      <div className={styles.navFooter} data-collapsed={collapsed}>
+        <span className={styles.footerMark}>R</span>
+        <div>
+          <strong>Ray Console</strong>
+          <span>v0.1 · Internal</span>
+        </div>
+      </div>
+    </nav>
   );
 }
 
