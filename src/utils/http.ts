@@ -1,5 +1,6 @@
 import { Observable } from "rxjs";
 import { notification } from "antd";
+import Cookies from "js-cookie";
 
 // API 基础 URL（生产环境用独立域名，开发环境用代理）
 const API_BASE_URL = import.meta.env.VITE_API_URL || "";
@@ -14,10 +15,12 @@ function request<P = any, R = any>(
   const fullUrl = API_BASE_URL + url;
   
   return new Observable(observer => {
+    const csrfToken = method === "GET" ? undefined : Cookies.get("csrf_access_token");
     fetch(fullUrl, {
       method,
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        ...(csrfToken ? { "X-CSRF-TOKEN": csrfToken } : {})
       },
       body: body ? JSON.stringify(body) : null,
       credentials: "include"

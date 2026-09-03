@@ -38,8 +38,7 @@ interface ApiResponse<T> {
   message: string;
 }
 
-async function read<T>(url: string): Promise<T> {
-  const result = await firstValueFrom(request<null, ApiResponse<T>>(url));
+function unwrap<T>(result: ApiResponse<T>): T {
   if (result.code !== 200) {
     const authExpired = [5001, 5002, 5003, 5004, 5005].includes(result.code);
     throw new Error(
@@ -47,6 +46,10 @@ async function read<T>(url: string): Promise<T> {
     );
   }
   return result.data;
+}
+
+async function read<T>(url: string): Promise<T> {
+  return unwrap(await firstValueFrom(request<null, ApiResponse<T>>(url)));
 }
 
 export function getChuanDaiUsers(filters: ChuanDaiUserFilters) {
@@ -61,4 +64,18 @@ export function getChuanDaiUsers(filters: ChuanDaiUserFilters) {
 
 export function getChuanDaiUser(id: string) {
   return read<ChuanDaiUser>(`/api/chuan-dai/user/${encodeURIComponent(id)}`);
+}
+
+export interface ResetChuanDaiPassword {
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export async function resetChuanDaiPassword(id: string, values: ResetChuanDaiPassword) {
+  const result = await firstValueFrom(
+    request<ResetChuanDaiPassword, ApiResponse<{ id: string }>>(
+      `/api/chuan-dai/user/${encodeURIComponent(id)}/reset-password`, "POST", values
+    )
+  );
+  return unwrap(result);
 }
