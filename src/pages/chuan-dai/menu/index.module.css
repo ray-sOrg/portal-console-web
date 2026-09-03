@@ -1,0 +1,52 @@
+.page { color: #24312e; }
+.pageHeader { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 24px; }
+.pageHeader p { margin: 0 0 7px; color: #6e8a80; font-size: 9px; font-weight: 700; letter-spacing: 0.16em; }
+.pageHeader h1 { margin: 0; color: #1a2c26; font-family: Georgia, "Times New Roman", serif; font-size: clamp(26px, 3vw, 36px); font-weight: 500; letter-spacing: -0.035em; }
+.pageHeader > div:first-child > span { display: block; margin-top: 8px; color: #71807a; font-size: 12px; }
+.summary { display: flex; align-items: stretch; border-top: 1px solid #dce2da; border-bottom: 1px solid #dce2da; }
+.summary div { min-width: 94px; padding: 11px 14px; }
+.summary div + div { border-left: 1px solid #dce2da; }
+.summary span, .summary strong { display: block; }
+.summary span { color: #7e8985; font-size: 9px; }
+.summary strong { margin-top: 3px; color: #23352f; font-size: 19px; font-weight: 600; }
+.toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; padding: 14px; border: 1px solid #e0e5de; border-radius: 6px; background: rgba(255, 255, 255, 0.88); }
+.filters { display: flex; flex: 1; gap: 10px; }
+.filters :global(.ant-input-affix-wrapper) { width: min(100%, 300px); }
+.filters :global(.ant-select) { width: 160px; }
+.table :global(.ant-table-cell-fix-left), .table :global(.ant-table-cell-fix-right) { background: #fff; }
+.dishCell { display: flex; align-items: center; gap: 12px; }
+.dishCell img, .imagePlaceholder { width: 46px; height: 46px; flex: 0 0 auto; border-radius: 5px; object-fit: cover; }
+.imagePlaceholder { display: grid; place-items: center; color: #46685e; background: #e9eee8; font-family: Georgia, "Times New Roman", serif; font-size: 18px; }
+.dishCell > div, .nutritionCell { min-width: 0; display: flex; flex-direction: column; }
+.dishCell strong { overflow: hidden; color: #253630; font-size: 13px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.dishCell span, .nutritionCell span { margin-top: 4px; overflow: hidden; color: #89938f; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.nutritionCell strong { color: #365f53; font-size: 13px; font-weight: 650; }
+.muted { color: #a1aaa6; }
+.missing { color: #a66b2c; font-size: 11px; }
+.drawer :global(.ant-drawer-header) { min-height: 66px; border-bottom-color: #e3e7e1; }
+.drawer :global(.ant-drawer-body) { padding: 28px 32px 48px; }
+.formSection { max-width: 680px; margin: 0 auto; }
+.sectionHeading { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 22px; }
+.sectionHeading > span { padding-top: 4px; color: #8ba199; font-family: Georgia, "Times New Roman", serif; font-size: 11px; }
+.sectionHeading h3 { margin: 0; color: #20342d; font-family: Georgia, "Times New Roman", serif; font-size: 21px; font-weight: 500; }
+.sectionHeading p { margin: 5px 0 0; color: #7c8883; font-size: 11px; line-height: 1.55; }
+.fullWidth { width: 100%; }
+.formAlert { margin-bottom: 20px; }
+.nutritionPreview { margin-top: 8px; padding: 18px 20px; border: 1px solid rgba(66, 110, 97, 0.2); border-left: 3px solid #a9c946; border-radius: 4px; background: #f5f8f1; }
+.previewTitle { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.previewTitle span { color: #54645e; font-size: 11px; font-weight: 600; }
+.previewTitle strong { color: #294c42; font-size: 13px; }
+.nutritionPreview dl { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin: 0; overflow: hidden; border: 1px solid #e0e6dc; background: #e0e6dc; }
+.nutritionPreview dl div { padding: 12px; background: #fff; }
+.nutritionPreview dt { color: #7e8b86; font-size: 9px; }
+.nutritionPreview dd { margin: 5px 0 0; color: #233a32; font-size: 13px; font-weight: 600; }
+
+@media (max-width: 680px) {
+  .pageHeader { align-items: flex-start; flex-direction: column; gap: 18px; }
+  .summary { width: 100%; }
+  .summary div { flex: 1; }
+  .toolbar, .filters { align-items: stretch; flex-direction: column; }
+  .filters :global(.ant-input-affix-wrapper), .filters :global(.ant-select) { width: 100%; }
+  .drawer :global(.ant-drawer-body) { padding: 22px 18px 40px; }
+  .nutritionPreview dl { grid-template-columns: repeat(2, 1fr); }
+}
