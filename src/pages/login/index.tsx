@@ -1,8 +1,11 @@
-import { Button, Form, Input, Flex, notification } from "antd";
+import { useState } from "react";
+import { Button, Form, Input, notification } from "antd";
 import { useMemoizedFn } from "ahooks";
 import { useNavigate } from "react-router";
+import { finalize } from "rxjs";
 import { login } from "@/api";
 import type { FormProps } from "antd";
+import styles from "./index.module.css";
 
 type FieldType = {
   username: string;
@@ -11,70 +14,118 @@ type FieldType = {
 
 function Login() {
   const navigate = useNavigate();
+  const [submitting, setSubmitting] = useState(false);
 
   const onFinish: FormProps<FieldType>["onFinish"] = useMemoizedFn(values => {
-    login(values).subscribe(res => {
-      if (res?.code !== 200) {
-        return notification.open({
-          type: "error",
-          message: res?.message
-        });
-      }
-      if (res.code === 200 && res?.token) {
-        navigate("/");
-      }
-    });
+    setSubmitting(true);
+
+    login(values)
+      .pipe(finalize(() => setSubmitting(false)))
+      .subscribe({
+        next: res => {
+          if (res?.code !== 200) {
+            notification.error({
+              message: "登录失败",
+              description: res?.message || "请检查用户名和密码"
+            });
+            return;
+          }
+
+          if (res.data?.uuid) {
+            navigate("/");
+          }
+        },
+        error: () => {
+          notification.error({
+            message: "暂时无法登录",
+            description: "请检查网络连接后重试"
+          });
+        }
+      });
   });
 
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = useMemoizedFn(
-    errorInfo => {
-      console.log("Failed:", errorInfo);
-    }
-  );
-
   return (
-    <div
-      style={{
-        backgroundColor: "#fff",
-        padding: "60px 0 20px",
-        marginTop: "30vh"
-      }}
-    >
-      <Flex justify="center">
-        <Form
-          name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 600 }}
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item<FieldType>
-            label="用户名"
-            name="username"
-            rules={[{ required: true, message: "请输入用户名!" }]}
-          >
-            <Input />
-          </Form.Item>
+    <main className={styles.page}>
+      <section className={styles.brandPanel} aria-label="Ray Console">
+        <div className={styles.brandMark} aria-hidden="true">
+          R
+        </div>
+        <div className={styles.brandContent}>
+          <p className={styles.eyebrow}>Management workspace</p>
+          <h1>Ray Console</h1>
+          <p className={styles.brandStatement}>
+            清晰掌握每一项内容，专注处理真正重要的工作。
+          </p>
+        </div>
+        <div className={styles.panelFooter}>
+          <span>OPERATIONS</span>
+          <span>EST. 2024</span>
+        </div>
+      </section>
 
-          <Form.Item<FieldType>
-            label="密码"
-            name="password"
-            rules={[{ required: true, message: "请输入密码!" }]}
-          >
-            <Input.Password />
-          </Form.Item>
+      <section className={styles.loginPanel}>
+        <div className={styles.mobileBrand}>
+          <span className={styles.mobileMark}>R</span>
+          <span>Ray Console</span>
+        </div>
 
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              登录
+        <div className={styles.formWrap}>
+          <header className={styles.formHeader}>
+            <p className={styles.formKicker}>安全登录</p>
+            <h2>欢迎回来</h2>
+            <p>请输入你的账号信息进入管理台。</p>
+          </header>
+
+          <Form<FieldType>
+            className={styles.form}
+            layout="vertical"
+            requiredMark={false}
+            onFinish={onFinish}
+            autoComplete="on"
+          >
+            <Form.Item
+              label="用户名"
+              name="username"
+              rules={[{ required: true, message: "请输入用户名" }]}
+            >
+              <Input
+                size="large"
+                placeholder="请输入用户名"
+                autoComplete="username"
+                autoFocus
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="密码"
+              name="password"
+              rules={[{ required: true, message: "请输入密码" }]}
+            >
+              <Input.Password
+                size="large"
+                placeholder="请输入密码"
+                autoComplete="current-password"
+              />
+            </Form.Item>
+
+            <Button
+              className={styles.submitButton}
+              type="primary"
+              htmlType="submit"
+              size="large"
+              loading={submitting}
+              block
+            >
+              {submitting ? "正在登录" : "登录管理台"}
             </Button>
-          </Form.Item>
-        </Form>
-      </Flex>
-    </div>
+          </Form>
+
+          <p className={styles.securityNote}>仅限授权用户访问</p>
+        </div>
+
+        <p className={styles.copyright}>Ray Console · Internal Workspace</p>
+      </section>
+    </main>
   );
 }
 

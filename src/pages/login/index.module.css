@@ -1,0 +1,331 @@
+.page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(420px, 0.88fr) minmax(520px, 1.12fr);
+  background: #f4f3ee;
+  color: #1d2524;
+}
+
+.brandPanel {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: clamp(32px, 5vw, 72px);
+  color: #f8f8f2;
+  background-color: #17211f;
+  isolation: isolate;
+}
+
+.brandPanel::before {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  content: "";
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.brandPanel::after {
+  position: absolute;
+  z-index: -1;
+  right: -16%;
+  bottom: 9%;
+  width: 68%;
+  aspect-ratio: 1;
+  content: "";
+  border: 1px solid rgba(214, 241, 103, 0.52);
+  transform: rotate(32deg);
+  box-shadow:
+    -34px 34px 0 rgba(214, 241, 103, 0.08),
+    -68px 68px 0 rgba(214, 241, 103, 0.05);
+}
+
+.brandMark {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  color: #17211f;
+  background: #d6f167;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1;
+  animation: reveal 560ms ease-out both;
+}
+
+.brandContent {
+  max-width: 540px;
+  margin: auto 0;
+  padding: 72px 0;
+}
+
+.eyebrow,
+.formKicker {
+  margin: 0 0 18px;
+  color: #d6f167;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.brandContent h1 {
+  max-width: 520px;
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(58px, 6vw, 92px);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: 0;
+  animation: rise 650ms 80ms ease-out both;
+}
+
+.brandStatement {
+  max-width: 390px;
+  margin: 34px 0 0;
+  color: rgba(248, 248, 242, 0.68);
+  font-size: 15px;
+  line-height: 1.8;
+  animation: rise 650ms 150ms ease-out both;
+}
+
+.panelFooter {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid rgba(248, 248, 242, 0.14);
+  color: rgba(248, 248, 242, 0.4);
+  font-size: 9px;
+  letter-spacing: 0;
+}
+
+.loginPanel {
+  position: relative;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 72px clamp(42px, 8vw, 144px);
+}
+
+.formWrap {
+  width: min(100%, 410px);
+  animation: rise 600ms 100ms ease-out both;
+}
+
+.formHeader {
+  margin-bottom: 42px;
+}
+
+.formKicker {
+  margin-bottom: 12px;
+  color: #557c6f;
+}
+
+.formHeader h2 {
+  margin: 0 0 14px;
+  color: #17211f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+.formHeader > p:last-child {
+  margin: 0;
+  color: #717a77;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.form :global(.ant-form-item) {
+  margin-bottom: 24px;
+}
+
+.form :global(.ant-form-item-label) {
+  padding-bottom: 8px;
+}
+
+.form :global(.ant-form-item-label > label) {
+  height: auto;
+  color: #35413e;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.form :global(.ant-input),
+.form :global(.ant-input-affix-wrapper) {
+  min-height: 52px;
+  border-color: #d5d8d3;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: none;
+  font-size: 14px;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.form :global(.ant-input-affix-wrapper .ant-input) {
+  min-height: auto;
+  background: transparent;
+}
+
+.form :global(.ant-input:hover),
+.form :global(.ant-input-affix-wrapper:hover) {
+  border-color: #7e9890;
+  background: #ffffff;
+}
+
+.form :global(.ant-input:focus),
+.form :global(.ant-input-affix-wrapper-focused) {
+  border-color: #557c6f;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(85, 124, 111, 0.12);
+}
+
+.submitButton {
+  height: 52px;
+  margin-top: 8px;
+  border-radius: 4px;
+  background: #1c302c;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 12px 28px rgba(28, 48, 44, 0.16);
+}
+
+.submitButton:hover,
+.submitButton:focus-visible {
+  background: #2e5149 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 15px 30px rgba(28, 48, 44, 0.2) !important;
+}
+
+.securityNote {
+  margin: 24px 0 0;
+  color: #929994;
+  font-size: 11px;
+  text-align: center;
+}
+
+.mobileBrand {
+  display: none;
+}
+
+.copyright {
+  position: absolute;
+  right: clamp(28px, 4vw, 64px);
+  bottom: 28px;
+  margin: 0;
+  color: #a0a6a1;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 960px) {
+  .page {
+    display: block;
+  }
+
+  .brandPanel {
+    display: none;
+  }
+
+  .loginPanel {
+    min-height: 100svh;
+    padding: 96px 28px 72px;
+    place-items: center;
+  }
+
+  .mobileBrand {
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #24312e;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .mobileMark {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    color: #17211f;
+    background: #d6f167;
+  }
+
+  .formHeader {
+    margin-bottom: 34px;
+  }
+
+  .formHeader h2 {
+    font-size: 38px;
+  }
+
+  .copyright {
+    right: auto;
+    bottom: 22px;
+    left: 28px;
+  }
+}
+
+@media (max-width: 420px) {
+  .loginPanel {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .mobileBrand,
+  .copyright {
+    left: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brandMark,
+  .brandContent h1,
+  .brandStatement,
+  .formWrap {
+    animation: none;
+  }
+
+  .submitButton {
+    transition: none;
+  }
+}
