@@ -81,7 +81,7 @@ function Login() {
             type="primary"
             size="large"
             block
-            onClick={() => window.location.assign("/api/auth/oidc/login?app=console")}
+            onClick={() => window.location.assign("https://api.tt829.cn/api/auth/oidc/login?app=console")}
           >
             使用统一账号登录
           </Button>
