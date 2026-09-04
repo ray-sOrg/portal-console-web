@@ -73,8 +73,20 @@ function Login() {
           <header className={styles.formHeader}>
             <p className={styles.formKicker}>安全登录</p>
             <h2>欢迎回来</h2>
-            <p>请输入你的账号信息进入管理台。</p>
+            <p>使用 TT829 统一账号进入管理台。</p>
           </header>
+
+          <Button
+            className={styles.submitButton}
+            type="primary"
+            size="large"
+            block
+            onClick={() => window.location.assign("/api/auth/oidc/login?app=console")}
+          >
+            使用统一账号登录
+          </Button>
+
+          <div className={styles.legacyDivider}>迁移期间旧账号登录</div>
 
           <Form<FieldType>
             className={styles.form}
@@ -116,7 +128,7 @@ function Login() {
               loading={submitting}
               block
             >
-              {submitting ? "正在登录" : "登录管理台"}
+              {submitting ? "正在登录" : "使用旧账号登录"}
             </Button>
           </Form>
 

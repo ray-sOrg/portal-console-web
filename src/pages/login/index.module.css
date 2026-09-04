@@ -210,6 +210,23 @@
   box-shadow: 0 15px 30px rgba(28, 48, 44, 0.2) !important;
 }
 
+.legacyDivider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+  color: #8a928f;
+  font-size: 12px;
+}
+
+.legacyDivider::before,
+.legacyDivider::after {
+  height: 1px;
+  flex: 1;
+  background: #d5d8d3;
+  content: "";
+}
+
 .securityNote {
   margin: 24px 0 0;
   color: #929994;
