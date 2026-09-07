@@ -14,7 +14,7 @@ export function login(data: ApiRequestLogin): Observable<ApiResponseLogin> {
 }
 
 // 登出
-export function loginOut(): Observable<ApiResponseLoginOut> {
-  const url = "/api/auth/logout";
-  return request<null, ApiResponseLogin>(url, "POST");
+export function loginOut(): Observable<Omit<ApiResponseLoginOut, 'data'> & {data: {logoutUrl: string}}> {
+  const url = "/api/auth/logout?unified=1&app=console";
+  return request(url, "POST");
 }

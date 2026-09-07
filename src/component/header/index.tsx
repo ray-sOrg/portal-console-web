@@ -1,4 +1,4 @@
-import { Avatar, Button, Popconfirm, Tooltip } from "antd";
+import { Avatar, Button, Popconfirm, Tooltip, message } from "antd";
 import {
   LogoutOutlined,
   MenuFoldOutlined,
@@ -39,10 +39,12 @@ function Header({ collapsed, onToggleNavigation }: HeaderProps) {
   );
 
   const handleLoginOut = useMemoizedFn(() => {
-    loginOut().subscribe(res => {
-      if (res.code === 200) {
-        navigate("/login");
-      }
+    loginOut().subscribe({
+      next: res => {
+        if (res.code === 200 && res.data.logoutUrl) window.location.assign(res.data.logoutUrl);
+        else message.error("退出未完成，请重试。");
+      },
+      error: () => message.error("退出未完成，请重试。")
     });
   });
 
@@ -92,7 +94,7 @@ function Header({ collapsed, onToggleNavigation }: HeaderProps) {
           {firstChart}
         </Avatar>
         <Popconfirm
-          title="确定退出当前用户？"
+          title="退出此浏览器中的所有业务系统？其他设备不受影响。"
           okText="是"
           cancelText="否"
           onConfirm={handleLoginOut}
