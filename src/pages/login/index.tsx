@@ -6,6 +6,7 @@ import { finalize } from "rxjs";
 import { login } from "@/api";
 import type { FormProps } from "antd";
 import styles from "./index.module.css";
+import { SilentSso } from "@/components/silent-sso";
 
 type FieldType = {
   username: string;
@@ -60,6 +61,7 @@ function Login() {
 
   return (
     <main className={styles.page}>
+      <SilentSso loginUrl="https://api.tt829.cn/api/auth/oidc/login?app=console&silent=1" resultOrigin="https://api.tt829.cn" enabled={!authError} />
       <section className={styles.brandPanel} aria-label="Ray Console">
         <div className={styles.brandMark} aria-hidden="true">
           R
