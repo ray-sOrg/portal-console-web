@@ -1,13 +1,16 @@
 import React, { PropsWithChildren, useState } from "react";
 import { Spin } from "antd";
 import { useMemoizedFn, useMount } from "ahooks";
-import { Navigate } from "react-router";
+import { Navigate, useSearchParams } from "react-router";
 import { getLoginUserInfo } from "@/api";
 import useGlobalStore from "@/store";
 
 const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const callbackError = searchParams.get("auth_error");
 
   const setUser = useGlobalStore(state => state.setUser);
 
@@ -25,22 +28,31 @@ const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
         },
         error: () => {
           setIsAuthenticated(false);
+          setLoginError("unavailable");
           setLoading(false);
         }
       });
     } catch {
       setIsAuthenticated(false);
+      setLoginError("unavailable");
       setLoading(false);
     }
   });
 
-  useMount(() => checkAuthentication());
+  useMount(() => {
+    if (!callbackError) checkAuthentication();
+  });
+
+  const authError = callbackError || loginError;
+  if (authError) {
+    return <Navigate to={`/login?${new URLSearchParams({ auth_error: authError })}`} replace />;
+  }
 
   if (loading) {
     return <Spin spinning fullscreen />;
   }
 
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;

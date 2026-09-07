@@ -15,7 +15,10 @@ function request<P = any, R = any>(
   const fullUrl = API_BASE_URL + url;
   
   return new Observable(observer => {
-    const csrfToken = method === "GET" ? undefined : Cookies.get("csrf_access_token");
+    const csrfCookieName = url === "/api/auth/logout" || url === "/api/auth/token/refresh"
+      ? "csrf_refresh_token"
+      : "csrf_access_token";
+    const csrfToken = method === "GET" ? undefined : Cookies.get(csrfCookieName);
     fetch(fullUrl, {
       method,
       headers: {
