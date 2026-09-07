@@ -1,28 +1,9 @@
-# =================== Stage 1: Build ===================
-FROM node:24-alpine AS builder
-WORKDIR /app
-
-# Copy package files
-COPY package.json yarn.lock ./
-
-# Install dependencies
-RUN --mount=type=cache,target=/usr/local/share/.cache/yarn \
-    yarn install --frozen-lockfile
-
-# Copy source code
-COPY . .
-
-# Set API URL for production build
-ENV VITE_API_URL=https://api.tt829.cn
-
-# Build the project
-RUN yarn build
-
-# =================== Stage 2: Production ===================
+# CI builds dist before packaging the image. For local image builds, run
+# VITE_API_URL=https://api.tt829.cn yarn build first.
 FROM nginx:alpine AS runner
 
 # Copy built files from builder
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY dist /usr/share/nginx/html
 
 # Copy nginx config for SPA routing
 COPY nginx.conf /etc/nginx/conf.d/default.conf

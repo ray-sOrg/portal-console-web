@@ -43,10 +43,26 @@ jobs:
           echo "tag=$IMAGE_TAG" >> "$GITHUB_OUTPUT"
           echo "Image: $IMAGE_NAME:$IMAGE_TAG"
 
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Build static application
+        env:
+          VITE_API_URL: https://api.tt829.cn
+        run: |
+          npx --yes yarn@1.22.22 install --frozen-lockfile
+          npx --yes yarn@1.22.22 lint
+          npx --yes yarn@1.22.22 build
+          test -s dist/index.html
+
       - name: Package deployment source
         id: source
         run: |
-          git archive --format=tar.gz --output "$RUNNER_TEMP/deployment-source.tar.gz" HEAD
+          git archive --format=tar --output "$RUNNER_TEMP/deployment-source.tar" HEAD
+          tar -rf "$RUNNER_TEMP/deployment-source.tar" dist
+          gzip "$RUNNER_TEMP/deployment-source.tar"
           (
             cd "$RUNNER_TEMP"
             sha256sum deployment-source.tar.gz > deployment-source.tar.gz.sha256

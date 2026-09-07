@@ -17,7 +17,6 @@ eslint.config.js
 *.local
 
 # --- 构建输出 ---
-dist
 build
 .vite
 coverage
