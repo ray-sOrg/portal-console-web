@@ -1,17 +1,13 @@
 import { Flex, Button, Input } from "antd";
-import { PlusOutlined, SyncOutlined } from "@ant-design/icons";
+import { SyncOutlined } from "@ant-design/icons";
 import userListStore from "./userListContext";
 import useUserList from "./useUserList";
 
 const { Search } = Input;
 
 function Toolbar() {
-  const { keyword, setKeyword, setIsModalOpen } = userListStore();
+  const { keyword, setKeyword } = userListStore();
   const { fetch } = useUserList();
-
-  const handleOpenAddUserModal = () => {
-    setIsModalOpen(true);
-  };
 
   return (
     <Flex
@@ -30,13 +26,6 @@ function Toolbar() {
           onClick={fetch}
         >
           刷新
-        </Button>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={handleOpenAddUserModal}
-        >
-          添加用户
         </Button>
       </div>
       <div className="workspace-toolbar__search">

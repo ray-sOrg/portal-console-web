@@ -41,20 +41,6 @@ export interface ApiResponseUserList {
   total: number;
 }
 
-export interface ApiRequestAddUser {
-  username: string;
-  password: string;
-  role: string | "user" | "admin" | "super_admin";
-}
-
-export interface ApiResponseAddUser {
-  code: number;
-  message: string;
-  data: {
-    user_id: string;
-  };
-}
-
 export interface ApiRequestDeleteUser {
   uuid: string;
 }
