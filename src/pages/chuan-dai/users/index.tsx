@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Alert, Avatar, Button, Descriptions, Drawer, Empty, Input,
-  Select, Skeleton, Space, Table, Tag, Typography, message
+  Select, Skeleton, Table, Tag, Typography
 } from "antd";
-import { KeyOutlined, ReloadOutlined, UserOutlined } from "@ant-design/icons";
+import { ReloadOutlined, UserOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 import {
@@ -12,7 +12,6 @@ import {
   type ChuanDaiRole, type ChuanDaiUser, type ChuanDaiUserFilters
 } from "@/api/chuan-dai-user";
 import styles from "./index.module.css";
-import ResetPasswordModal from "./reset-password-modal";
 
 const ROLE_LABELS = { HOST: "主人", GUEST: "客人" };
 const GENDER_LABELS = { MALE: "男", FEMALE: "女", OTHER: "其他" };
@@ -78,8 +77,6 @@ function UserList() {
     pageNumber: 1, pageSize: 10, keyword: "", role: ""
   });
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [resetUser, setResetUser] = useState<ChuanDaiUser | null>(null);
-  const [messageApi, contextHolder] = message.useMessage();
   const { data, error, isFetching, refetch } = useQuery({
     queryKey: ["chuan-dai-users", filters],
     queryFn: () => getChuanDaiUsers(filters),
@@ -97,25 +94,21 @@ function UserList() {
     { title: "手机号", dataIndex: "phone", width: 150, render: (phone: string | null) => phone || <span className={styles.muted}>未绑定</span> },
     { title: "注册时间", dataIndex: "createdAt", width: 170, render: formatTime },
     { title: "最近登录", dataIndex: "lastLoginAt", width: 170, render: (value: string | null) => value ? formatTime(value) : <span className={styles.muted}>暂无记录</span> },
-    { title: "操作", key: "actions", width: 210, fixed: "right", render: (_, user) => (
-      <Space size={0}>
-        <Button type="link" onClick={() => setSelectedId(user.id)} aria-label={`查看${user.nickname || user.account}的详情`}>查看详情</Button>
-        <Button type="link" icon={<KeyOutlined />} onClick={() => setResetUser(user)} aria-label={`重置${user.account}的密码`}>重置密码</Button>
-      </Space>
+    { title: "操作", key: "actions", width: 120, fixed: "right", render: (_, user) => (
+      <Button type="link" onClick={() => setSelectedId(user.id)} aria-label={`查看${user.nickname || user.account}的详情`}>查看详情</Button>
     ) }
   ];
 
   return (
     <section className={styles.page}>
-      {contextHolder}
       <header className={styles.pageHeader}>
         <div>
           <p>CHUAN DAI COMMUNITY</p>
           <h1>用户管理</h1>
-          <span>查看川傣注册用户、个人资料与最近登录情况。</span>
+          <span>查看已绑定统一账号的川傣用户、个人资料与最近登录情况。</span>
         </div>
         <div className={styles.summary} aria-live="polite">
-          <span>{filtered ? "符合条件的用户" : "注册用户"}</span>
+          <span>{filtered ? "符合条件的用户" : "统一账号用户"}</span>
           <strong>{error || !data ? "—" : data.total}<small>人</small></strong>
         </div>
       </header>
@@ -154,23 +147,11 @@ function UserList() {
             }))
           }}
           locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description={isFetching ? "正在加载用户…" : filtered ? "没有找到符合条件的用户" : "暂无注册用户，用户在川傣注册后会显示在这里"}>
+            description={isFetching ? "正在加载用户…" : filtered ? "没有找到符合条件的用户" : "暂无已绑定统一账号的用户"}>
             {filtered && !isFetching ? <Button onClick={resetFilters}>清除筛选</Button> : null}
           </Empty> }} />
       )}
       {selectedId ? <UserDetail key={selectedId} id={selectedId} onClose={() => setSelectedId(null)} /> : null}
-      {resetUser ? (
-        <ResetPasswordModal
-          key={resetUser.id}
-          user={resetUser}
-          onClose={() => setResetUser(null)}
-          onSaved={() => {
-            setResetUser(null);
-            void messageApi.success("密码已重置，请使用新密码重新登录川傣");
-            void refetch();
-          }}
-        />
-      ) : null}
     </section>
   );
 }

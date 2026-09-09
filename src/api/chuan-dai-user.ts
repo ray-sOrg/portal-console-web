@@ -65,17 +65,3 @@ export function getChuanDaiUsers(filters: ChuanDaiUserFilters) {
 export function getChuanDaiUser(id: string) {
   return read<ChuanDaiUser>(`/api/chuan-dai/user/${encodeURIComponent(id)}`);
 }
-
-export interface ResetChuanDaiPassword {
-  newPassword: string;
-  confirmPassword: string;
-}
-
-export async function resetChuanDaiPassword(id: string, values: ResetChuanDaiPassword) {
-  const result = await firstValueFrom(
-    request<ResetChuanDaiPassword, ApiResponse<{ id: string }>>(
-      `/api/chuan-dai/user/${encodeURIComponent(id)}/reset-password`, "POST", values
-    )
-  );
-  return unwrap(result);
-}

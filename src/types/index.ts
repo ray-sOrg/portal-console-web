@@ -9,18 +9,6 @@ export interface Page {
   pageSize: number;
 }
 
-export interface ApiRequestLogin {
-  username: string;
-  password: string;
-}
-
-export interface ApiResponseLogin {
-  code: number;
-  message: string;
-  data: User;
-  token?: string;
-}
-
 export interface ApiResponseLoginOut {
   code: number;
   message: string;
